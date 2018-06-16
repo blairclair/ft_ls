@@ -50,7 +50,6 @@ void    display_ls(char **arreg)
     i = 0;
     while (arreg[i])
     {
-       
         ft_printf("%s\n", arreg[i]);
         i++;
     }
@@ -76,7 +75,6 @@ char    **sort_reg(char **arreg)
         arreg[j + 1] = x;
         i++;
     }
-  //  display_ls(arreg);
     return (arreg);
 }
 
@@ -119,9 +117,7 @@ int ls_reg(char *arg)
         return (0);
     while ((test = readdir(dir1)) != NULL )
 	{
-		if (test->d_name[0] == '.')
-			test = readdir(dir1);
-		else
+            if (test->d_name[0] != '.')
 			{
                 arreg[i] = test->d_name;
                 i++;
@@ -129,6 +125,7 @@ int ls_reg(char *arg)
     }
     arreg[i] = NULL;
     sort_reg(arreg);
+    display_ls(arreg);
     //free(arreg);
     return (0);
 }

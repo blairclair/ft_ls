@@ -29,17 +29,19 @@ int     main(int argc, char *argv[])
     lsdirs.dir_names = malloc(200);
     if (argc == 1)
     { 
-   //    ls_reg(".");
+       ls_reg(".");
    
-   lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(".") + 1);
-        ls_r2(".", &lsdirs);
+   //lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(".") + 1);
+     //   ls_r2(".", &lsdirs);
     }
     else
     {
-     //   ls_reg(argv[1]);
+        ls_reg(argv[1]);
     // lsdirs.dir_names = malloc(countdir(argv[1], &lsdirs));
-     lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(argv[1]) + 20);
-        ls_r2(argv[1], &lsdirs);
+  //   lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(argv[1]) + 20);
+      //  ls_r2(argv[1], &lsdirs);
     }
+    free(lsdirs.dir_names);
+    free(lsdirs.arreg);
     return (0);
 }
