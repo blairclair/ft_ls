@@ -23,8 +23,6 @@ char	*ft_strcmp_ls(char *ss1, char *ss2)
     char    *temp_s1;
     char    *temp_s2;
 
-    if (ft_strcmp(ss1, "") || ft_strcmp(ss2, ""))
-        return (NULL);
     temp_s1 = ss1;
     temp_s2 = ss2;
 	while (*ss1 != '\0' || *ss2 != '\0')
