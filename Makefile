@@ -39,6 +39,7 @@ libft/printf_functions/print_extra_stuff.c\
 libft/printf_functions/ft_printf.c\
 recurs_ls.c\
 reg_ls.c\
+hid_ls.c\
 ft_ls.c
 
 NAME=ft_ls
