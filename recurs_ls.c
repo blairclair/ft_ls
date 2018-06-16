@@ -46,7 +46,7 @@ int		countdir(char *arg, struct s_dirstuff *r2dir)
 	return (r2dir->num_dir);
 }
 
-char	**get_files(char **arreg, char *arg)
+int		get_files(char **arreg, char *arg)
 {
 	struct dirent   *test;
     DIR             *dir1;
@@ -54,19 +54,19 @@ char	**get_files(char **arreg, char *arg)
 
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
-		return (NULL);
+		return (0);
 	while ((test = readdir(dir1)) != NULL)
 	{
 		arreg[i] = malloc(20);
 		if (test->d_name[0] != '.')
 		{
-			
 			arreg[i] = test->d_name;
 			i++;
 		}
 	}
 	arreg[i + 1] = NULL;
-	return (arreg);
+	sort_reg(arreg);
+	return (i);
 }
 
 
@@ -93,9 +93,8 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 	clear_arreg(r2dir);
     if ((dir1 = opendir(arg)) == NULL)
         return (0);
-	 if (get_files(r2dir->arreg, arg) == NULL)
-	 	return (0);
-	 display_ls(r2dir->arreg);
+	 get_files(r2dir->arreg, arg);
+//	 display_ls(r2dir->arreg);
     while ((test = readdir(dir1)) != NULL)
 	{		
 		if (test->d_name[0] != '.')

@@ -49,7 +49,7 @@ void    display_ls(char **arreg)
 {
     int i;
 
-    i = 1;
+    i = 0;
     while (arreg[i])
     {
        
