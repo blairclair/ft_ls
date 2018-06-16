@@ -47,6 +47,7 @@ int		countdir(char *arg, struct s_dirstuff *r2dir)
 		}
 	}
 	closedir(dir1);
+	r2dir->dir_names[r2dir->arrnum] = NULL;
 	return (r2dir->num_dir);
 }
 

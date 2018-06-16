@@ -22,7 +22,7 @@
 int     main(int argc, char *argv[])
 {  
     struct s_dirstuff lsdirs;
-
+    
     lsdirs.newdir = NULL;
     lsdirs.num_dir = 0;
     lsdirs.arrnum = 0;
