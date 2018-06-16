@@ -71,14 +71,15 @@ char    **sort_reg(char **arreg)
         while (j >= 0 && ft_strcmp_ls(arreg[j], x) == x)
         {
             arreg[j + 1] = arreg[j];
-            j = j - 1;
+            j--;
         }
         arreg[j + 1] = x;
         i++;
     }
-    display_ls(arreg);
+  //  display_ls(arreg);
     return (arreg);
 }
+
 
 int get_num_reg(char *arg)
 {

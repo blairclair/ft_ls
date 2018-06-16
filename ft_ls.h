@@ -25,6 +25,8 @@ struct s_dirstuff{
     char    *newdir;
     int     num_dir;
     char    **arreg;
+    char    **dir_names;
+    int     arrnum;
 
                 };
 
@@ -34,5 +36,6 @@ int     get_num_reg(char *arg);
 char    **sort_reg(char **arreg);
 void    display_ls(char **arreg);
 char	*ft_strcmp_ls(char *ss1, char *ss2);
+int		countdir(char *arg, struct s_dirstuff *r2dir);
 
 #endif

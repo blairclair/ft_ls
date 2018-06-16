@@ -25,16 +25,19 @@ int     main(int argc, char *argv[])
 
     lsdirs.newdir = NULL;
     lsdirs.num_dir = 0;
-    lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(argv[1]) + 1);
+    lsdirs.arrnum = 0;
+    lsdirs.dir_names = malloc(200);
     if (argc == 1)
     { 
    //    ls_reg(".");
+   
    lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(".") + 1);
         ls_r2(".", &lsdirs);
     }
     else
     {
      //   ls_reg(argv[1]);
+    // lsdirs.dir_names = malloc(countdir(argv[1], &lsdirs));
      lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(argv[1]) + 20);
         ls_r2(argv[1], &lsdirs);
     }
