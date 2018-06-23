@@ -29,7 +29,7 @@ int     main(int argc, char *argv[])
     lsdirs.newdir = NULL;
     lsdirs.num_dir = 0;
     lsdirs.arrnum = 0;
-    lsdirs.dir_names = malloc(200);
+    //lsdirs.dir_names = malloc(200);
     if (argc == 1)
     { 
         ls_ti(".", &ts);

@@ -93,11 +93,24 @@ int     conv_month(int i, int arr_track,  char *newdate, struct timestuff *ts)
 int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts)
 {
     int j;
-
+    int track;
+    
     j = 0;
+    track = 0;
     while (!ft_isdigit(ts->regtime[i][j]))
         j++;
     arr_track++;
+    while ((ts->regtime[i][j]) != ' ')
+    {
+        j++;
+        track++;
+    }
+    j-= track;
+    if (track == 1)
+    {
+        newdate[arr_track] = '0';
+        arr_track++;
+    }
     while (ts->regtime[i][j] != ' ')
     {
         newdate[arr_track] = ts->regtime[i][j];
@@ -166,7 +179,6 @@ char **conv_full_date(struct timestuff *ts)
     while (ts->regtime[i])
     {    
         newdate[i] = malloc(26);
-        ft_bzero(newdate[i], 25);
         arr_track = conv_month(i, arr_track, &*newdate[i], ts);
         arr_track = conv_day_num(i, arr_track, &*newdate[i], ts);
         arr_track = conv_year(i, arr_track, &*newdate[i], ts);

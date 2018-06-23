@@ -118,6 +118,30 @@ int get_num_reg(char *arg)
     return (i);
 }
 
+int get_num_date(char *arg)
+{
+    struct dirent *test;
+    DIR *dir1;
+    int     i;
+
+    i = 0;
+    if ((dir1 = opendir(arg)) == NULL)
+    {
+        return (0);
+    }
+    while (1)
+	{
+        test = readdir(dir1);
+        if (!test)
+            break ;
+		if (test->d_name[0] == '.')
+			test = readdir(dir1);
+		else
+                i++;
+    }
+    return (i);
+}
+
 int ls_reg(char *arg)
 {
     struct dirent   *test;

@@ -39,7 +39,7 @@ char    **sort_time(char **arreg, char **arrtime)
         x2 = arrtime[i];
         x = arreg[i];
         j = i - 1;
-        while (j >= 0 && ft_strcmp_ls(arrtime[j], x2) == x2)
+        while (j >= 0 && ft_strcmp_ls(arrtime[j], x2) == arrtime[j])
         {
             arrtime[j + 1] = arrtime[j];
             arreg[j + 1] = arreg[j];
@@ -49,12 +49,13 @@ char    **sort_time(char **arreg, char **arrtime)
         arrtime[j + 1] = x2;
         i++;
     }
-    i = 0;
+    display_ls(arreg);
+  /*  i = 0;
     while (arreg[i])
     {
-        ft_printf("%s %s\n", arreg[i], arrtime[i]);
+        ft_printf("%s %s\n\n", arreg[i], arrtime[i]);
         i++;
-    }
+    }*/
     return (arreg);
 }
 
@@ -71,11 +72,9 @@ int ls_ti(char *arg, struct timestuff *ts)
     time_t           ti;
     char             **date_num;
 
-    if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
-        return (0);
-    if ((ts->nantime = malloc(sizeof(ts->nantime) * get_num_reg(arg) + 1)) == NULL)
-        return (0);   
-    ts->regtime = malloc(sizeof(ts->regtime) * get_num_reg(arg) + 1); 
+    arreg = malloc(sizeof(char *) * get_num_reg(arg) + 1);
+    ts->nantime = malloc(sizeof(long) * (get_num_date(arg) * 7) + 1);
+    ts->regtime = malloc(sizeof(char *) *(get_num_date(arg) * 24) + 1); 
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
         return (0);
@@ -83,7 +82,9 @@ int ls_ti(char *arg, struct timestuff *ts)
 	{
         if (test->d_name[0] != '.')
 		{
+            arreg[i] = malloc(ft_strlen(test->d_name) + 1);
             arreg[i] = test->d_name;
+            arreg[i][ft_strlen(test->d_name) + 1] = '\0';
             lstat(test->d_name, &statcheck);
             ts->regtime[i] = ft_strdup(ctime(&statcheck.st_mtime));
             ti = statcheck.st_mtimespec.tv_nsec;
@@ -91,7 +92,10 @@ int ls_ti(char *arg, struct timestuff *ts)
             i++;
         }
     }
+   // ft_printf("rtime: %s", ts->regtime[0]);
     arreg[i] = NULL;
+    ts->regtime[i] = NULL;
+    ts->nantime[i] = '\0';
    // display_ls(ts->regtime);
     date_num = conv_full_date(ts);
     i = 0;
