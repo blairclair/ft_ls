@@ -43,6 +43,7 @@ recurs_ls.c\
 reg_ls.c\
 hid_ls.c\
 time_ls.c\
+conv_time.c\
 ft_ls.c
 
 NAME=ft_ls

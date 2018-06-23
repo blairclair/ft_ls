@@ -44,5 +44,9 @@ char	*ft_strcmp_ls(char *ss1, char *ss2);
 int		countdir(char *arg, struct s_dirstuff *r2dir);
 int     ls_a(char *arg);
 int     ls_ti(char *arg, struct timestuff *ts);
+int     conv_month2(int i, int arr_track, char *newdate, struct timestuff *ts);
+int     conv_month(int i, int arr_track,  char *newdate, struct timestuff *ts);
+int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts);
+char **conv_full_date(struct timestuff *ts);
 
 #endif
