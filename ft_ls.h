@@ -48,5 +48,6 @@ int     conv_month2(int i, int arr_track, char *newdate, struct timestuff *ts);
 int     conv_month(int i, int arr_track,  char *newdate, struct timestuff *ts);
 int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts);
 char **conv_full_date(struct timestuff *ts);
+int     ft_strcmp_ls_i(char *ss1, char *ss2);
 
 #endif

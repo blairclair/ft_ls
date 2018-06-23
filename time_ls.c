@@ -33,12 +33,13 @@ char    **sort_time(char **arreg, char **arrtime)
 
     j = 0;
     i = 1;
+   
    while (arrtime[i])
     {
         x2 = arrtime[i];
         x = arreg[i];
         j = i - 1;
-        while (j >= 0 && ft_strcmp_ls(arrtime[j], x2) == arrtime[j])
+        while (j >= 0 && ft_strcmp_ls(arrtime[j], x2) == x2)
         {
             arrtime[j + 1] = arrtime[j];
             arreg[j + 1] = arreg[j];
@@ -46,6 +47,12 @@ char    **sort_time(char **arreg, char **arrtime)
         }
         arreg[j + 1] = x;
         arrtime[j + 1] = x2;
+        i++;
+    }
+    i = 0;
+    while (arreg[i])
+    {
+        ft_printf("%s %s\n", arreg[i], arrtime[i]);
         i++;
     }
     return (arreg);
@@ -62,6 +69,7 @@ int ls_ti(char *arg, struct timestuff *ts)
     int             i;
     struct stat     statcheck;
     time_t           ti;
+    char             **date_num;
 
     if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
         return (0);
@@ -84,7 +92,10 @@ int ls_ti(char *arg, struct timestuff *ts)
         }
     }
     arreg[i] = NULL;
-    conv_full_date(ts);
+   // display_ls(ts->regtime);
+    date_num = conv_full_date(ts);
+    i = 0;
+    sort_time(arreg, date_num);
     free(arreg);
     free(ts->nantime);
     free(ts->regtime);

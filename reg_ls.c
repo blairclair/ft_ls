@@ -18,6 +18,21 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+char     *ft_strcmp_ls_i(char *ss1, char *ss2)
+{
+    int    temp_s1;
+    int    temp_s2;
+
+    temp_s1 = ft_atoi(ss1);
+    temp_s2 = ft_atoi(ss2);
+	if (ss1 == ss2)
+	    return (0);
+    else if (ss1 > ss2)
+        return (ss2);
+    else
+        return (ss1);
+}
+
 char	*ft_strcmp_ls(char *ss1, char *ss2)
 {
     char    *temp_s1;
