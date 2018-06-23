@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall -Wextra -Werror -g
+CFLAGS= -Wall -Wextra -Werror
 SRCS=libft/ft_putchar.c\
 libft/ft_strjoin.c\
 libft/ft_strcat.c\
@@ -17,6 +17,8 @@ libft/ft_strtoupper.c\
 libft/ft_bzero.c\
 libft/ft_memalloc.c\
 libft/ft_strnew.c\
+libft/ft_strdup.c\
+libft/ft_memmove.c\
 libft/printf_functions/ft_putulong.c\
 libft/printf_functions/ft_ltoa_base.c\
 libft/printf_functions/ft_ultoa_base.c\
@@ -40,6 +42,7 @@ libft/printf_functions/ft_printf.c\
 recurs_ls.c\
 reg_ls.c\
 hid_ls.c\
+time_ls.c\
 ft_ls.c
 
 NAME=ft_ls

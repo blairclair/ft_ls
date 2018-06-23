@@ -48,7 +48,7 @@ int ls_r(char *arg)
     DIR             *dir1;
     char            **arreg;
     int             i;
-
+  
     if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
         return (0);
     i = 0;

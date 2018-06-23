@@ -28,6 +28,11 @@ struct s_dirstuff{
     char    **dir_names;
     int     arrnum;
                 };
+struct timestuff{
+    char      **regtime;
+    long long *nantime;
+
+};
 
 int     ls_r(char *arg);
 int     ls_reg(char *arg);
@@ -37,6 +42,7 @@ char    **sort_reg(char **arreg);
 void    display_ls(char **arreg);
 char	*ft_strcmp_ls(char *ss1, char *ss2);
 int		countdir(char *arg, struct s_dirstuff *r2dir);
-int ls_a(char *arg);
+int     ls_a(char *arg);
+int     ls_ti(char *arg, struct timestuff *ts);
 
 #endif

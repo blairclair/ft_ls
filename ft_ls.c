@@ -18,32 +18,37 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <time.h>
 
 int     main(int argc, char *argv[])
 {  
     struct s_dirstuff lsdirs;
-    
+    struct timestuff ts;
+
+    ts.nantime = NULL;
     lsdirs.newdir = NULL;
     lsdirs.num_dir = 0;
     lsdirs.arrnum = 0;
     lsdirs.dir_names = malloc(200);
     if (argc == 1)
     { 
-        ls_r(".");
-    // ls_a(".");
+        ls_ti(".", &ts);
+       // ls_r(".");
+     //ls_a(".");
     //  ls_reg(".");
    
-   //lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(".") + 1);
-     //   ls_r2(".", &lsdirs);
+      //lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(".") + 1);
+       // ls_r2(".", &lsdirs);
     }
     else
     {
-        ls_r(argv[1]);
+        ls_ti(argv[1], &ts);
+        //ls_r(argv[1]);
        // ls_a(argv[1]);
       //  ls_reg(argv[1]);
-    // lsdirs.dir_names = malloc(countdir(argv[1], &lsdirs));
-  //   lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(argv[1]) + 20);
-      //  ls_r2(argv[1], &lsdirs);
+      // lsdirs.dir_names = malloc(countdir(argv[1], &lsdirs));
+       //lsdirs.arreg = malloc(sizeof(lsdirs.arreg) * get_num_reg(argv[1]) + 20);
+       // ls_r2(argv[1], &lsdirs);
     }
     free(lsdirs.dir_names);
     free(lsdirs.arreg);

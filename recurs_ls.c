@@ -87,15 +87,6 @@ void	clear_arreg(struct s_dirstuff *r2dir)
 		i++;
 	}
 }
-void	testy(struct s_dirstuff *r2dir)
-{
-		int	i = 0;
-	while (r2dir->dir_names[i])
-	{
-		ft_printf("dn: %s\n", r2dir->dir_names[i]);
-		i++;
-	}
-}
 
 int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 {
