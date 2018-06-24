@@ -89,7 +89,6 @@ int     get_num(struct stat statcheck)
     int numlink;
 
     numlink = statcheck.st_nlink;
-    printf("nlink: %d\n", numlink);
     return (numlink);
 }
 
@@ -155,6 +154,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     lstuff->group = malloc(sizeof(lstuff->group) * get_num_reg(arg) + 1);
     lstuff->date = malloc(sizeof(char *) *(get_num_date(arg) * 24) + 1);
     lstuff->num = malloc(get_num_date(arg) * sizeof(int));
+    lstuff->bsize = malloc((get_num_date(arg) * sizeof(int)) * 7);
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
         return (0);
@@ -171,7 +171,8 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
                 lstuff->group[i] = get_group(statcheck);
                 lstuff->date[i] = get_date(lstuff->date[i], statcheck);
                 lstuff->num[i] = get_num(statcheck);
-             //   lstuff->bsize[i] = get_file_size(statcheck);
+                lstuff->bsize[i] = get_file_size(statcheck);
+           //     lstuff->bsize[i] = get_file_size(statcheck);
                 i++;
             }
     }
@@ -180,7 +181,12 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     lstuff->user[i] = NULL;
     lstuff->group[i] = NULL;
     lstuff->date[i] = NULL;
-
+    free(lstuff->perm);
+    free(lstuff->user);
+    free(lstuff->group);
+    free(lstuff->date);
+    free(lstuff->num);
+    free(lstuff->bsize);
     return (arreg);
 }
 
@@ -194,8 +200,8 @@ int ls_l(char *arg, struct line_stuff *lstuff)
    lstuff->name = get_arr(arg, lstuff);
     while (lstuff->name[i])
     {
-        ft_printf("%s %d %s %s %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
-            lstuff->group[i], lstuff->date[i], lstuff->name[i]);
+        ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
+            lstuff->group[i], lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
         i++;
     } 
    return (0);
