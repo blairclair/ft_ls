@@ -50,7 +50,7 @@ char    **sort_time(char **arreg, char **arrtime)
         i++;
     }
     display_ls(arreg);
-  /*  i = 0;
+    /*i = 0;
     while (arreg[i])
     {
         ft_printf("%s %s\n\n", arreg[i], arrtime[i]);

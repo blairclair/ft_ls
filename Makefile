@@ -44,6 +44,7 @@ reg_ls.c\
 hid_ls.c\
 time_ls.c\
 conv_time.c\
+line_ls.c\
 ft_ls.c
 
 NAME=ft_ls

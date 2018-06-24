@@ -28,10 +28,21 @@ struct s_dirstuff{
     char    **dir_names;
     int     arrnum;
                 };
+
 struct timestuff{
     char      **regtime;
     long long *nantime;
 
+};
+
+struct line_stuff{
+    char        **name;
+    char        **perm;
+    char        **user;
+    char        **group;
+    int         *bsize;
+    char        **date;
+    int         *num;
 };
 
 int     ls_r(char *arg);
@@ -50,5 +61,6 @@ int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts);
 char    **conv_full_date(struct timestuff *ts);
 char    *ft_strcmp_ls_i(char *ss1, char *ss2);
 int     get_num_date(char *arg);
+int ls_l(char *arg, struct line_stuff *lstuff);
 
 #endif
