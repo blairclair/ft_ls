@@ -254,12 +254,13 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 
    i = 0;
    lstuff->name = get_arr(arg, lstuff);
-  // sort_line(lstuff->name, lstuff);
+   sort_line(lstuff->name, lstuff);
     while (lstuff->name[i])
     {
   //     ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
     //     lstuff->group[i], lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
-       ft_printf("%s %d %s %s %s %d\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i], lstuff->group[i], lstuff->date[i], lstuff->bsize[i]);
+       ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
+                 lstuff->group[i], lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
         i++;
     } 
    return (0);
