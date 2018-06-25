@@ -149,11 +149,11 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     struct stat statcheck;
 
     arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1);
-    lstuff->perm = malloc(sizeof(lstuff->perm) * get_num_reg(arg) + 1);
+    lstuff->perm = malloc(11 * get_num_date(arg) * sizeof(char*) + 1);
     lstuff->user = malloc(sizeof(lstuff->name) * get_num_reg(arg) + 1);
     lstuff->group = malloc(sizeof(lstuff->group) * get_num_reg(arg) + 1);
     lstuff->date = malloc(sizeof(char *) *(get_num_date(arg) * 24) + 1);
-    lstuff->num = malloc(get_num_date(arg) * sizeof(int));
+    lstuff->num = malloc(get_num_date(arg) * sizeof(int) * 2 + 1);
     lstuff->bsize = malloc((get_num_date(arg) * sizeof(int)) * 7);
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
@@ -190,6 +190,51 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     return (arreg);
 }
 
+char    **sort_line(char **arreg, struct line_stuff *lstuff)
+{
+    int     i;
+    int     j;
+    char    *x2;
+    struct sortstuff s_stuff;
+
+    j = 0;
+    i = 1;
+ 
+   while (arreg[i])
+    {
+        x2 = arreg[i];
+        s_stuff.bsizesort = lstuff->bsize[i];
+        s_stuff.datesort = lstuff->date[i];
+        s_stuff.groupsort = lstuff->group[i];
+        s_stuff.namesort = lstuff->name[i];
+        s_stuff.numsort = lstuff->num[i];
+        s_stuff.permsort = lstuff->perm[i];
+        s_stuff.usersort = lstuff->user[i];
+        j = i - 1;
+        while (j >= 0 && ft_strcmp_ls(arreg[j], x2) == x2)
+        {
+            arreg[j + 1] = arreg[j];
+            lstuff->bsize[j + 1] = lstuff->bsize[j];
+            lstuff->date[j + 1] = lstuff->date[j];
+            lstuff->group[j + 1] = lstuff->group[j];
+            lstuff->name[j + 1] = lstuff->name[j];
+            lstuff->num[j + 1] = lstuff->num[j];
+            lstuff->perm[j + 1] = lstuff->perm[j];
+            lstuff->user[j + 1] = lstuff->user[j];
+            j--;
+        }
+        arreg[j + 1] = x2;
+        lstuff->bsize[j + 1] = s_stuff.bsizesort;
+        lstuff->date[j + 1] = s_stuff.datesort;
+        lstuff->group[j + 1] = s_stuff.groupsort;
+        lstuff->name[j + 1] = s_stuff.namesort;
+        lstuff->num[j + 1] = s_stuff.numsort;
+        lstuff->perm[j + 1] = s_stuff.permsort;
+        lstuff->user[j + 1] = s_stuff.usersort;
+        i++;
+    }
+    return (arreg);
+}
 
 
 int ls_l(char *arg, struct line_stuff *lstuff)
@@ -198,6 +243,7 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 
    i = 0;
    lstuff->name = get_arr(arg, lstuff);
+   sort_line(lstuff->name, lstuff);
     while (lstuff->name[i])
     {
         ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],

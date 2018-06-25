@@ -45,6 +45,16 @@ struct line_stuff{
     int         *num;
 };
 
+struct sortstuff{
+    char    *namesort;
+    char    *permsort;
+    char    *usersort;
+    char    *groupsort;
+    int     bsizesort;
+    char    *datesort;
+    int     numsort;
+};
+
 int     ls_r(char *arg);
 int     ls_reg(char *arg);
 int     ls_r2(char *arg, struct s_dirstuff *r2dir);
