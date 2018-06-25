@@ -129,15 +129,10 @@ int get_num_date(char *arg)
     {
         return (0);
     }
-    while (1)
+    while ((test = readdir(dir1)) != NULL)
 	{
-        test = readdir(dir1);
-        if (!test)
-            break ;
-		if (test->d_name[0] == '.')
-			test = readdir(dir1);
-		else
-                i++;
+		if (test->d_name[0] != '.')
+	         i++;
     }
     return (i);
 }

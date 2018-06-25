@@ -70,6 +70,7 @@ void    other_perm(char *perm, struct stat statcheck)
         perm[9] = 'x';
     else
         perm[9] = '-';
+    perm[10] = '\0';
 }
 
 char    *get_perm(char *perm, struct stat statcheck)
@@ -96,20 +97,26 @@ char    *get_user(struct stat statcheck)
 {
     struct  passwd *pwd;
     unsigned int    iduser;
-    
+    char        *pwname;
+
     iduser = statcheck.st_uid;
     pwd = getpwuid(iduser);
-    return (pwd->pw_name);
+    pwname = pwd->pw_name;
+    pwname[ft_strlen(pwd->pw_name) + 1] = '\0';
+    return (pwname);
 }
 
 char    *get_group(struct stat statcheck)
 {
     struct  group *grp;
     unsigned int    idgroup;
+    char        *strgrp;
     
     idgroup = statcheck.st_gid;
     grp = getgrgid(idgroup);
-    return (grp->gr_name);
+    strgrp = grp->gr_name;
+    strgrp[ft_strlen(grp->gr_name) + 1] = '\0';
+    return (strgrp);
 }
 
 int     get_file_size(struct stat statcheck)
@@ -129,6 +136,7 @@ char    *get_date(char *date, struct stat statcheck)
     j = 0;
     i = 4;
     date2 = malloc(18);
+   
     date = ft_strdup(ctime(&statcheck.st_mtime));
     while (i < 19)
     {
@@ -136,6 +144,7 @@ char    *get_date(char *date, struct stat statcheck)
         j++;
         i++;
     }
+    date2[j] = '\0';
     return (date2);
 }
 
@@ -149,12 +158,13 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     struct stat statcheck;
 
     arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1);
-    lstuff->perm = malloc(11 * get_num_date(arg) * sizeof(char*) + 1);
-    lstuff->user = malloc(sizeof(lstuff->name) * get_num_reg(arg) + 1);
-    lstuff->group = malloc(sizeof(lstuff->group) * get_num_reg(arg) + 1);
-    lstuff->date = malloc(sizeof(char *) *(get_num_date(arg) * 24) + 1);
-    lstuff->num = malloc(get_num_date(arg) * sizeof(int) * 2 + 1);
-    lstuff->bsize = malloc((get_num_date(arg) * sizeof(int)) * 7);
+    lstuff->perm = malloc(sizeof(lstuff) * (get_num_date(arg)  + 1));
+    lstuff->user = malloc(sizeof(lstuff) * (get_num_date(arg) + 1));
+    lstuff->group = malloc(sizeof(lstuff) * (get_num_date(arg) + 1));
+    lstuff->date = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
+    lstuff->num = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
+    lstuff->bsize = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
+    //lstuff->bsize = malloc((get_num_date(arg) * sizeof(int)) * 7);
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
         return (0);
@@ -163,8 +173,10 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
             if (test->d_name[0] != '.')
 			{
                 stat(test->d_name, &statcheck);
-                lstuff->perm[i] = malloc(10);
-                lstuff->date[i] = malloc(20);
+                lstuff->perm[i] = malloc(sizeof(lstuff));
+                lstuff->user[i] = malloc(sizeof(lstuff));
+                lstuff->group[i] = malloc(sizeof(lstuff));
+                lstuff->date[i] = malloc(sizeof(lstuff));
                 arreg[i] = test->d_name;
                 lstuff->perm[i] = get_perm(lstuff->perm[i], statcheck);
                 lstuff->user[i] = get_user(statcheck);
@@ -181,12 +193,11 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     lstuff->user[i] = NULL;
     lstuff->group[i] = NULL;
     lstuff->date[i] = NULL;
-    free(lstuff->perm);
-    free(lstuff->user);
-    free(lstuff->group);
-    free(lstuff->date);
-    free(lstuff->num);
-    free(lstuff->bsize);
+   // free(lstuff->perm);
+    //free(lstuff->user);
+  //  free(lstuff->group);
+   // free(lstuff->date);
+    //free(lstuff->bsize);*/
     return (arreg);
 }
 
@@ -243,11 +254,12 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 
    i = 0;
    lstuff->name = get_arr(arg, lstuff);
-   sort_line(lstuff->name, lstuff);
+  // sort_line(lstuff->name, lstuff);
     while (lstuff->name[i])
     {
-        ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
-            lstuff->group[i], lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
+  //     ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
+    //     lstuff->group[i], lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
+       ft_printf("%s %d %s %s %s %d\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i], lstuff->group[i], lstuff->date[i], lstuff->bsize[i]);
         i++;
     } 
    return (0);
