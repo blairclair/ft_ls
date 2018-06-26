@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/09 09:05:40 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/06/09 09:05:43 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/06/26 14:07:29 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,45 @@
 #include <unistd.h>
 
 struct s_dirstuff{
-    char    *newdir;
-    int     num_dir;
-    char    **arreg;
-    char    **dir_names;
-    int     arrnum;
-                };
+	char    *newdir;
+	int     num_dir;
+	char    **arreg;
+	char    **dir_names;
+	int     arrnum;
+	char	r;
+	char	r2;
+	char	t;
+	char	l;
+	char	reg;
+	char	a;
+};
 
 struct timestuff{
-    char      **regtime;
-    long long *nantime;
+	char      **regtime;
+	long long *nantime;
 
 };
 
 struct line_stuff{
-    char        **name;
-    char        **perm;
-    char        **user;
-    char        **group;
-    int         *bsize;
-    char        **date;
-    int         *num;
-    int         *size_padding;
-    char        *realname;
+	char        **name;
+	char        **perm;
+	char        **user;
+	char        **group;
+	int         *bsize;
+	char        **date;
+	int         *num;
+	int         *size_padding;
+	char        *realname;
 };
 
 struct sortstuff{
-    char    *namesort;
-    char    *permsort;
-    char    *usersort;
-    char    *groupsort;
-    int     bsizesort;
-    char    *datesort;
-    int     numsort;
+	char    *namesort;
+	char    *permsort;
+	char    *usersort;
+	char    *groupsort;
+	int     bsizesort;
+	char    *datesort;
+	int     numsort;
 };
 
 int     ls_r(char *arg);

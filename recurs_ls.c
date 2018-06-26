@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/09 09:03:24 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/06/16 11:59:03 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/06/26 14:08:48 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 	{
 		if ((dir1 = opendir(r2dir->dir_names[i])) == NULL)
 		{
-	//		ft_printf("no\n");
+			//		ft_printf("no\n");
 			return (0);
 		}
-			ft_printf("\n%s\n", r2dir->dir_names[i]);
-			clear_arreg(r2dir);
-			get_files(r2dir->arreg, r2dir->dir_names[i]);
+		ft_printf("\n%s\n", r2dir->dir_names[i]);
+		clear_arreg(r2dir);
+		get_files(r2dir->arreg, r2dir->dir_names[i]);
 		i++;
 	}
 	return (0);
