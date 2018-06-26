@@ -101,7 +101,6 @@ char    *get_user(struct stat statcheck)
 
     iduser = statcheck.st_uid;
     pwd = getpwuid(iduser);
-   // printf("%d\n",iduser);
     pwname2 = pwd->pw_name;
     pwname2[ft_strlen(pwd->pw_name) + 1] = '\0';
     return (pwname2);
@@ -169,7 +168,10 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     lstuff->size_padding = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
+    {
+        ft_printf("ls: %s: no such file or directory\n", arg);
         return (0);
+    }
     while ((test = readdir(dir1)) != NULL )
 	{
             if (test->d_name[0] != '.')
@@ -284,7 +286,8 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 
     i = 0;
     k = 0;
-   lstuff->name = get_arr(arg, lstuff);
+   if ((lstuff->name = get_arr(arg, lstuff)) == 0)
+    return (0);
    sort_line(lstuff->name, lstuff);
    padnum = sort_size(lstuff->size_padding);
  //  ft_printf("p: %s\n", padding);
@@ -313,5 +316,11 @@ int ls_l(char *arg, struct line_stuff *lstuff)
                  lstuff->group[i], padding, lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
         i++;
     } 
+    while (i > 0)
+    {
+        free(lstuff->perm[i]);
+        i--;
+    }
+    free(lstuff->perm);
    return (0);
 }

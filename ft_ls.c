@@ -29,18 +29,25 @@ char  *parse_args2(char *arg_list)
     int i;
     char    *path;
 
-    i = 3;
-    if (ft_strlen(arg_list) > 3)
+    i = 0;
+    while (arg_list[i])
     {
-        path = malloc(ft_strlen(arg_list) - 3);
-        ft_memmove(path, arg_list + 2, ft_strlen(arg_list) - 2);
+        if (arg_list[i] == '-' && (arg_list[i + 1] == 'R' ||
+         arg_list[i + 1] == 'a' || arg_list[i + 1] == 'r' || arg_list[i + 1] == 't'
+         || arg_list[i + 1] == 'l'))
+            break ;
+        i++;
+    }
+    if (ft_strlen(arg_list) > 3 && i != (int)ft_strlen(arg_list))
+    {
+        path = malloc(ft_strlen(arg_list) - i);
+        ft_memmove(path, arg_list + (i + 2), ft_strlen(arg_list) - (i + 2));
     }
     else
     {
         path = malloc(1);
         ft_strcpy(path, ".");
     }
-    ft_printf("path: %s\n", path);
     return (path);
 }  
 

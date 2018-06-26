@@ -50,12 +50,6 @@ char    **sort_time(char **arreg, char **arrtime)
         i++;
     }
     display_ls(arreg);
-    /*i = 0;
-    while (arreg[i])
-    {
-        ft_printf("%s %s\n\n", arreg[i], arrtime[i]);
-        i++;
-    }*/
     return (arreg);
 }
 
@@ -77,7 +71,10 @@ int ls_ti(char *arg, struct timestuff *ts)
     ts->regtime = malloc(sizeof(char *) *(get_num_date(arg) * 24) + 1); 
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
+    {
+        ft_printf("ls: %s: no such file or directory\n", arg);
         return (0);
+    }
     while ((test = readdir(dir1)) != NULL)
 	{
         if (test->d_name[0] != '.')
