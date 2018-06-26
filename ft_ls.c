@@ -36,6 +36,8 @@ char  *parse_args2(char *arg_list)
          arg_list[i + 1] == 'a' || arg_list[i + 1] == 'r' || arg_list[i + 1] == 't'
          || arg_list[i + 1] == 'l'))
             break ;
+        else if (arg_list[i] == '-')
+            break ;
         i++;
     }
     if (ft_strlen(arg_list) > 3 && i != (int)ft_strlen(arg_list))
@@ -89,7 +91,7 @@ int     main(int argc, char *argv[])
     int     i;
     char    *arg_list;
     struct line_stuff lstuff;
- 
+   
     arg_list = "";
     i = 3;
     ts.nantime = NULL;

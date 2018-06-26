@@ -59,7 +59,10 @@ int		get_files(char **arreg, char *arg)
 
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
+	{
+		ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
+	}
 	while ((test = readdir(dir1)) != NULL)
 	{
 		arreg[i] = malloc(20);
@@ -94,13 +97,17 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 	int				i;
 
 	i = 0;
-	get_files(r2dir->arreg, arg);
+	if (!get_files(r2dir->arreg, arg))
+		return (0);
 	countdir(arg, r2dir);
 	sort_reg(r2dir->dir_names);
 	while (r2dir->dir_names[i])
 	{
 		if ((dir1 = opendir(r2dir->dir_names[i])) == NULL)
+		{
+	//		ft_printf("no\n");
 			return (0);
+		}
 			ft_printf("\n%s\n", r2dir->dir_names[i]);
 			clear_arreg(r2dir);
 			get_files(r2dir->arreg, r2dir->dir_names[i]);

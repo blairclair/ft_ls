@@ -66,9 +66,9 @@ int ls_ti(char *arg, struct timestuff *ts)
     time_t           ti;
     char             **date_num;
 
-    arreg = malloc(sizeof(char *) * get_num_reg(arg) + 1);
-    ts->nantime = malloc(sizeof(long) * (get_num_date(arg) * 7) + 1);
-    ts->regtime = malloc(sizeof(char *) *(get_num_date(arg) * 24) + 1); 
+    arreg = malloc(sizeof(ts) * get_num_reg(arg) + 1);
+    ts->nantime = malloc(sizeof(ts) * (get_num_date(arg)) + 1);
+    ts->regtime = malloc(sizeof(ts) *(get_num_date(arg)) + 1); 
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
     {

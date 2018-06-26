@@ -316,11 +316,18 @@ int ls_l(char *arg, struct line_stuff *lstuff)
                  lstuff->group[i], padding, lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
         i++;
     } 
+    j = i;
     while (i > 0)
     {
         free(lstuff->perm[i]);
         i--;
     }
     free(lstuff->perm);
+   // free(lstuff->num);
+    free(lstuff->user);
+    free(lstuff->group);
+  //  free(lstuff->bsize);
+    free(lstuff->date);
+    free(lstuff->name);
    return (0);
 }
