@@ -164,7 +164,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     lstuff->date = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
     lstuff->num = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
     lstuff->bsize = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
-    //lstuff->bsize = malloc((get_num_date(arg) * sizeof(int)) * 7);
+    lstuff->size_padding = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
     i = 0;
     if ((dir1 = opendir(arg)) == NULL)
         return (0);
@@ -184,7 +184,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
                 lstuff->date[i] = get_date(lstuff->date[i], statcheck);
                 lstuff->num[i] = get_num(statcheck);
                 lstuff->bsize[i] = get_file_size(statcheck);
-           //     lstuff->bsize[i] = get_file_size(statcheck);
+                lstuff->size_padding[i] = get_num_len(lstuff->bsize[i]);
                 i++;
             }
     }
@@ -193,11 +193,6 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     lstuff->user[i] = NULL;
     lstuff->group[i] = NULL;
     lstuff->date[i] = NULL;
-   // free(lstuff->perm);
-    //free(lstuff->user);
-  //  free(lstuff->group);
-   // free(lstuff->date);
-    //free(lstuff->bsize);*/
     return (arreg);
 }
 
@@ -248,19 +243,67 @@ char    **sort_line(char **arreg, struct line_stuff *lstuff)
 }
 
 
+int   sort_size(int *bsize)
+{
+    int     i;
+    int     j;
+    int    x;
+
+    j = 0;
+    i = 1;
+   while (bsize[i])
+    {
+        x = bsize[i];
+        j = i - 1;
+        while (j >= 0 && bsize[j] < x)
+        {
+            bsize[j + 1] = bsize[j];
+            j--;
+        }
+        bsize[j + 1] = x;
+        i++;
+    }
+    return (bsize[0]);
+}
+
+
 int ls_l(char *arg, struct line_stuff *lstuff)
 {
-   int  i;
+    int     i;
+    char    *padding;
+    int     padnum;
+    int     j;
+    int     k;
 
-   i = 0;
+    i = 0;
+    k = 0;
    lstuff->name = get_arr(arg, lstuff);
    sort_line(lstuff->name, lstuff);
+   padnum = sort_size(lstuff->size_padding);
+ //  ft_printf("p: %s\n", padding);
     while (lstuff->name[i])
     {
-  //     ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
-    //     lstuff->group[i], lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
-       ft_printf("%s %d %s %s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i],
-                 lstuff->group[i], lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
+
+        j = get_num_len(lstuff->bsize[i]);
+        if (j < padnum)
+        {
+            k = 0;
+            padding = malloc(padnum - j);
+            while (j <= padnum)
+            {
+                padding[k] = ' ';
+                j++;
+                k++;
+            }  
+        }
+        else
+        {
+            
+            ft_strcpy(padding, " ");
+        }
+       // padding = ft_itoa(padnum - get_num_len(lstuff->bsize[i]));
+       ft_printf("%s %d %s %s%s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i], 
+                 lstuff->group[i], padding, lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
         i++;
     } 
    return (0);

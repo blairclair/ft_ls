@@ -43,6 +43,7 @@ struct line_stuff{
     int         *bsize;
     char        **date;
     int         *num;
+    int         *size_padding;
 };
 
 struct sortstuff{
