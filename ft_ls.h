@@ -44,6 +44,7 @@ struct line_stuff{
     char        **date;
     int         *num;
     int         *size_padding;
+    char        *realname;
 };
 
 struct sortstuff{

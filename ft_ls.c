@@ -24,12 +24,33 @@
 #include <time.h>
 #include <sys/xattr.h>
 
+char  *parse_args2(char *arg_list)
+{
+    int i;
+    char    *path;
+
+    i = 3;
+    if (ft_strlen(arg_list) > 3)
+    {
+        path = malloc(ft_strlen(arg_list) - 3);
+        ft_memmove(path, arg_list + 2, ft_strlen(arg_list) - 2);
+    }
+    else
+    {
+        path = malloc(1);
+        ft_strcpy(path, ".");
+    }
+    ft_printf("path: %s\n", path);
+    return (path);
+}  
+
 void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stuff *lstuff)
 {
     int i;
-
+    char    *path;
     i = 0;
     lsdirs->arreg = malloc(sizeof(lsdirs->arreg) * get_num_reg(".") + 1);
+    path = parse_args2(arg_list);
     while (arg_list[i])
     {
         if (arg_list[i] == '-')
@@ -38,15 +59,17 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
             if (arg_list[i] == '1')
                 i++;
             if (arg_list[i] == 'R')
-                ls_r2(".", lsdirs);
+                ls_r2(path, lsdirs);
             else if (arg_list[i] == 'a')
-                ls_a(".");
+                ls_a(path);
             else if (arg_list[i] == 'r')
-                ls_r(".");
+                ls_r(path);
             else if (arg_list[i] == 't')
-                ls_ti(".", ts);
+                ls_ti(path, ts);
             else if (arg_list[i] == 'l')
-                ls_l(".", lstuff);
+                ls_l(path, lstuff);
+           // if (ft_strlen(arg_list) > 3)
+           //     parse_args2(arg_list, lsdirs, ts, lstuff);
         }
         i++;
     }

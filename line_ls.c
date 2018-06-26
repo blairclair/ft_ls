@@ -97,13 +97,14 @@ char    *get_user(struct stat statcheck)
 {
     struct  passwd *pwd;
     unsigned int    iduser;
-    char        *pwname;
+    char        *pwname2;
 
     iduser = statcheck.st_uid;
     pwd = getpwuid(iduser);
-    pwname = pwd->pw_name;
-    pwname[ft_strlen(pwd->pw_name) + 1] = '\0';
-    return (pwname);
+   // printf("%d\n",iduser);
+    pwname2 = pwd->pw_name;
+    pwname2[ft_strlen(pwd->pw_name) + 1] = '\0';
+    return (pwname2);
 }
 
 char    *get_group(struct stat statcheck)
@@ -157,6 +158,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
     int             i;
     struct stat statcheck;
 
+    lstuff->realname = malloc(1);
     arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1);
     lstuff->perm = malloc(sizeof(lstuff) * (get_num_date(arg)  + 1));
     lstuff->user = malloc(sizeof(lstuff) * (get_num_date(arg) + 1));
@@ -172,7 +174,11 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 	{
             if (test->d_name[0] != '.')
 			{
-                stat(test->d_name, &statcheck);
+                ft_bzero(lstuff->realname, ft_strlen(lstuff->realname));
+                lstuff->realname = ft_strjoin(lstuff->realname, arg);
+                lstuff->realname =ft_strjoin(lstuff->realname, "/");
+                lstuff->realname = ft_strjoin(lstuff->realname, test->d_name);
+                stat(lstuff->realname, &statcheck);
                 lstuff->perm[i] = malloc(sizeof(lstuff));
                 lstuff->user[i] = malloc(sizeof(lstuff));
                 lstuff->group[i] = malloc(sizeof(lstuff));
@@ -185,6 +191,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
                 lstuff->num[i] = get_num(statcheck);
                 lstuff->bsize[i] = get_file_size(statcheck);
                 lstuff->size_padding[i] = get_num_len(lstuff->bsize[i]);
+                
                 i++;
             }
     }
