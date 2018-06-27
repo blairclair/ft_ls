@@ -134,7 +134,7 @@ int     main(int argc, char *argv[])
 	{
 		while (i < argc + 1)
 		{
-			arg_list = ft_strjoin(arg_list, argv[i - 1]);  
+			ft_strcat(arg_list, argv[i - 1]);  
 			i++;
 		}
 		parse_args(arg_list, &lsdirs, &ts, &lstuff);

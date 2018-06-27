@@ -65,7 +65,7 @@ void    display_ls(char **arreg)
 	i = 0;
 	while (arreg[i])
 	{
-		ft_printf("\n%s\n", arreg[i]);
+		ft_printf("%s\n", arreg[i]);
 		i++;
 	}
 }

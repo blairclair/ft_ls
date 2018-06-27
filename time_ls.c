@@ -76,12 +76,13 @@ int ls_ti(char *arg, struct timestuff *ts)
 	{
 		if (test->d_name[0] != '.')
 		{
+			ft_bzero(ts->realtname, ft_strlen(ts->realtname));
 			ts->realtname = ft_strjoin(ts->realtname, arg);
 			ts->realtname =ft_strjoin(ts->realtname, "/");
 			ts->realtname = ft_strjoin(ts->realtname, test->d_name);
 			arreg[i] = malloc(ft_strlen(test->d_name) + 1);
 			arreg[i] = test->d_name;
-			stat(test->d_name, &statcheck);
+			stat(ts->realtname, &statcheck);
 			ts->regtime[i] = ft_strdup(ctime(&statcheck.st_mtime));
 			ti = statcheck.st_mtimespec.tv_nsec;
 			ts->nantime[i] = ti;
@@ -95,13 +96,13 @@ int ls_ti(char *arg, struct timestuff *ts)
 	// display_ls(ts->regtime);
 	date_num = conv_full_date(arg, ts);
 	sort_time(arreg, date_num);
-	//display_ls(arreg);
+	display_ls(arreg);
 	i = 0;
-	while (arreg[i])
+/*	while (arreg[i])
 	{
 		ft_printf("\n%s %s\n", arreg[i], date_num[i]);
 		i++;
-	}
+	}*/
 //	closedir(dir1);
 	free(arreg);
 	free(ts->nantime);
