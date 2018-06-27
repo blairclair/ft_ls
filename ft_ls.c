@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-//DONT FORGET TO OPTIMIZE THIS IS RIDICULOUS
 #include <dirent.h>
 #include <string.h>
 #include <stdio.h>
@@ -24,7 +21,7 @@
 #include <time.h>
 #include <sys/xattr.h>
 
-char  *parse_args2(char *arg_list)
+char	*parse_args2(char *arg_list)
 {
 	int 	i;
 	char    *path;
@@ -35,8 +32,8 @@ char  *parse_args2(char *arg_list)
 	while (arg_list[i])
 	{
 		if (arg_list[i] == '-' && (arg_list[i + 1] == 'R' ||
-			arg_list[i + 1] == 'a' || arg_list[i + 1] == 'r' || arg_list[i + 1] == 't'
-			|| arg_list[i + 1] == 'l'))
+		 arg_list[i + 1] == 'a' || arg_list[i + 1] == 'r' ||
+		 arg_list[i + 1] == 't' || arg_list[i + 1] == 'l'))
 			{
 				check = 1;
 				break ;
@@ -55,7 +52,7 @@ char  *parse_args2(char *arg_list)
 	}
 	else
 	{
-		path = malloc(1);
+		path = malloc(2);
 		ft_strcpy(path, ".");
 	}
 	return (path);
@@ -137,7 +134,7 @@ int     main(int argc, char *argv[])
 	{
 		while (i < argc + 1)
 		{
-			ft_strcat(arg_list, argv[i - 1]);  
+			arg_list = ft_strjoin(arg_list, argv[i - 1]);  
 			i++;
 		}
 		parse_args(arg_list, &lsdirs, &ts, &lstuff);

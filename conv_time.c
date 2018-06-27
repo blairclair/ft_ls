@@ -129,7 +129,7 @@ int conv_year(int i, int arr_track, char *newdate, struct timestuff *ts)
 	col = 0;
 	j = 0;
 	arr_track++;
-	while (col <= 3)
+	while (col < 2)
 	{
 		if (ts->regtime[i][j] == ':')
 			col++;  
@@ -149,6 +149,8 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 {
 	int j;
 	char    *str_ntime;
+
+	str_ntime = malloc(get_num_len(ts->nantime[i]) + 1);
 	j = 0;
 	while (!ft_isdigit(ts->regtime[i][j]))
 		j++;
@@ -167,7 +169,7 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 	return (arr_track);
 }
 
-char **conv_full_date(struct timestuff *ts)
+char **conv_full_date(char *arg, struct timestuff *ts)
 {
 	int     i;
 	char    **newdate;
@@ -175,19 +177,21 @@ char **conv_full_date(struct timestuff *ts)
 
 	i = 0;
 	arr_track = 0;
-	newdate = malloc(ft_strlen(ts->regtime[i]) * 26);
+	newdate = malloc(sizeof(newdate) * (get_num_date(arg) + 1));
 	while (ts->regtime[i])
 	{    
-		newdate[i] = malloc(26);
+		newdate[i] = malloc(36);
 		arr_track = conv_month(i, arr_track, &*newdate[i], ts);
 		arr_track = conv_day_num(i, arr_track, &*newdate[i], ts);
 		arr_track = conv_year(i, arr_track, &*newdate[i], ts);
 		arr_track = conv_time_day(i, arr_track, &*newdate[i], ts);
-		newdate[i][25] = '\0';
+	//	newdate[i][25] = '\0';
 		arr_track = 0;
+		//	printf("size %zu\n", ft_strlen(newdate[i]));
 		i++;
 	}
 	newdate[i] = NULL;
+
 	// display_ls(newdate);
 	return (newdate);
 }

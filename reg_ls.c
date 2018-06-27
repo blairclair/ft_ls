@@ -65,7 +65,7 @@ void    display_ls(char **arreg)
 	i = 0;
 	while (arreg[i])
 	{
-		ft_printf("%s\n", arreg[i]);
+		ft_printf("\n%s\n", arreg[i]);
 		i++;
 	}
 }
@@ -143,7 +143,7 @@ int ls_reg(char *arg)
 	DIR             *dir1;
 	char            **arreg;
 	int             i;
-	printf("hi\n");
+
 	if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
 		return (0);
 	i = 0;

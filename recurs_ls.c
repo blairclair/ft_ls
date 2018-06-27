@@ -105,7 +105,6 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 	{
 		if ((dir1 = opendir(r2dir->dir_names[i])) == NULL)
 		{
-			//		ft_printf("no\n");
 			return (0);
 		}
 		ft_printf("\n%s\n", r2dir->dir_names[i]);

@@ -38,6 +38,7 @@ struct s_dirstuff{
 struct timestuff{
 	char      **regtime;
 	long long *nantime;
+	char		*realtname;
 
 };
 
@@ -76,7 +77,7 @@ int     ls_ti(char *arg, struct timestuff *ts);
 int     conv_month2(int i, int arr_track, char *newdate, struct timestuff *ts);
 int     conv_month(int i, int arr_track,  char *newdate, struct timestuff *ts);
 int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts);
-char    **conv_full_date(struct timestuff *ts);
+char    **conv_full_date(char *arg, struct timestuff *ts);
 char    *ft_strcmp_ls_i(char *ss1, char *ss2);
 int     get_num_date(char *arg);
 int ls_l(char *arg, struct line_stuff *lstuff);

@@ -45,16 +45,12 @@ char    **sort_time(char **arreg, char **arrtime)
 			arreg[j + 1] = arreg[j];
 			j--;
 		}
-		arreg[j + 1] = x;
 		arrtime[j + 1] = x2;
+		arreg[j + 1] = x;
 		i++;
 	}
-	display_ls(arreg);
 	return (arreg);
 }
-
-
-
 
 int ls_ti(char *arg, struct timestuff *ts) 
 {
@@ -66,9 +62,10 @@ int ls_ti(char *arg, struct timestuff *ts)
 	time_t           ti;
 	char             **date_num;
 
-	arreg = malloc(sizeof(ts) * get_num_reg(arg) + 1);
-	ts->nantime = malloc(sizeof(ts) * (get_num_date(arg)) + 1);
-	ts->regtime = malloc(sizeof(ts) *(get_num_date(arg)) + 1); 
+	arreg = malloc(get_num_reg(arg) + 1);
+	ts->realtname = malloc(1);
+	ts->nantime = malloc(sizeof(ts) * (get_num_date(arg) + 1));
+	ts->regtime = malloc(sizeof(ts) * (get_num_date(arg) + 1)); 
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
 	{
@@ -79,10 +76,12 @@ int ls_ti(char *arg, struct timestuff *ts)
 	{
 		if (test->d_name[0] != '.')
 		{
+			ts->realtname = ft_strjoin(ts->realtname, arg);
+			ts->realtname =ft_strjoin(ts->realtname, "/");
+			ts->realtname = ft_strjoin(ts->realtname, test->d_name);
 			arreg[i] = malloc(ft_strlen(test->d_name) + 1);
 			arreg[i] = test->d_name;
-			arreg[i][ft_strlen(test->d_name) + 1] = '\0';
-			lstat(test->d_name, &statcheck);
+			stat(test->d_name, &statcheck);
 			ts->regtime[i] = ft_strdup(ctime(&statcheck.st_mtime));
 			ti = statcheck.st_mtimespec.tv_nsec;
 			ts->nantime[i] = ti;
@@ -94,9 +93,16 @@ int ls_ti(char *arg, struct timestuff *ts)
 	ts->regtime[i] = NULL;
 	ts->nantime[i] = '\0';
 	// display_ls(ts->regtime);
-	date_num = conv_full_date(ts);
-	i = 0;
+	date_num = conv_full_date(arg, ts);
 	sort_time(arreg, date_num);
+	//display_ls(arreg);
+	i = 0;
+	while (arreg[i])
+	{
+		ft_printf("\n%s %s\n", arreg[i], date_num[i]);
+		i++;
+	}
+//	closedir(dir1);
 	free(arreg);
 	free(ts->nantime);
 	free(ts->regtime);
