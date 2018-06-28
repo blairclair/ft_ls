@@ -33,7 +33,8 @@ char	*parse_args2(char *arg_list)
 	{
 		if (arg_list[i] == '-' && (arg_list[i + 1] == 'R' ||
 		 arg_list[i + 1] == 'a' || arg_list[i + 1] == 'r' ||
-		 arg_list[i + 1] == 't' || arg_list[i + 1] == 'l'))
+		 arg_list[i + 1] == 't' || arg_list[i + 1] == 'l' ||
+		 arg_list[i + 1] == 'f'))
 			{
 				check = 1;
 				break ;
@@ -82,6 +83,8 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 				lsdirs->t = 1;
 			else if (arg_list[i] == 'l')
 				lsdirs->l = 1;
+			else if (arg_list[i] == 'f')
+				lsdirs->f = 1;
 			// if (ft_strlen(arg_list) > 3)
 			//     parse_args2(arg_list, lsdirs, ts, lstuff);
 		}
@@ -97,6 +100,8 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 		ls_ti(path, ts);
 	else if (lsdirs->l == 1)
 		ls_l(path, lstuff);
+	else if (lsdirs->f == 1)
+		ls_f(path);
 	else
 		ls_reg(path);
 	
@@ -124,6 +129,7 @@ int     main(int argc, char *argv[])
 	lsdirs.r2 = 0;
 	lsdirs.reg = 0;
 	lsdirs.t = 0;
+	lsdirs.f = 0;
 	arg_list = ft_strjoin(arg_list, argv[1]);
 
 	if (argc == 1 || !ft_strcmp(arg_list, "-1"))

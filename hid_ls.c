@@ -53,7 +53,10 @@ int ls_r(char *arg)
 		return (0);
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
+	{
+		ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
+	}
 	while ((test = readdir(dir1)) != NULL )
 	{
 		if (test->d_name[0] != '.')
@@ -80,7 +83,10 @@ int ls_a(char *arg)
 		return (0);
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
+	{
+		ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
+	}
 	while ((test = readdir(dir1)) != NULL )
 	{
 		arreg[i] = test->d_name;
@@ -88,6 +94,37 @@ int ls_a(char *arg)
 	}
 	arreg[i] = NULL;
 	sort_reg(arreg);
+	display_ls(arreg);
+	free(arreg);
+	return (0);
+}
+
+int		ls_f(char *arg)
+{
+	struct dirent   *test;
+	DIR             *dir1;
+	char            **arreg;
+	int             i;
+
+	if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
+		return (0);
+	arreg[0] = ".";
+	arreg[1] = "..";
+	i = 2;
+	if ((dir1 = opendir(arg)) == NULL)
+	{
+		ft_printf("ls: %s: no such file or directory\n", arg);
+		return (0);
+	}
+	while ((test = readdir(dir1)) != NULL )
+	{
+		if (ft_strcmp(test->d_name, ".") != 0 && ft_strcmp(test->d_name, "..") != 0)
+		{
+			arreg[i] = test->d_name;
+			i++;
+		}
+	}
+	arreg[i] = NULL;
 	display_ls(arreg);
 	free(arreg);
 	return (0);
