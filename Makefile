@@ -54,7 +54,7 @@ all: $(NAME)
 $(NAME): $(SRCS)
 	$(CC) -c $(SRCS)
 	$(CC) $(CFLAGS) -o $(NAME) $(SRCS)
-
+	/bin/rm -f *.o
 clean:
 	/bin/rm -f *.o
 	make -C libft/printf_functions/ clean
