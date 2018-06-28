@@ -35,6 +35,7 @@ struct s_dirstuff{
 	char	a;
 	char	f;
 	char	d;
+	char	g;
 };
 
 struct timestuff{
@@ -85,5 +86,18 @@ int     get_num_date(char *arg);
 int		ls_l(char *arg, struct line_stuff *lstuff);
 int		ls_f(char *arg);
 int		ls_d(char	*arg);
+void    user_perm(char *perm, struct stat statcheck);
+void    group_perm(char *perm, struct stat statcheck);
+void    other_perm(char *perm, struct stat statcheck);
+char    *get_perm(char *perm, struct stat statcheck);
+int     get_num(struct stat statcheck);
+char    *get_user(struct stat statcheck);
+char    *get_group(struct stat statcheck);
+int     get_file_size(struct stat statcheck);
+char    *get_date(char *date, struct stat statcheck);
+char    **get_arr(char *arg, struct line_stuff *lstuff);
+char    **sort_line(char **arreg, struct line_stuff *lstuff);
+int		sort_size(int *bsize);
+int ls_g(char *arg, struct line_stuff *lstuff);
 
 #endif
