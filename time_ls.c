@@ -97,15 +97,16 @@ int ls_ti(char *arg, struct timestuff *ts)
 	date_num = conv_full_date(arg, ts);
 	sort_time(arreg, date_num);
 	display_ls(arreg);
-	i = 0;
+	
+	free(arreg);
+	free(ts->regtime);
+	free(ts->nantime);
 /*	while (arreg[i])
 	{
 		ft_printf("\n%s %s\n", arreg[i], date_num[i]);
 		i++;
 	}*/
 //	closedir(dir1);
-	free(arreg);
-	free(ts->nantime);
-	free(ts->regtime);
+
 	return (0);
 }

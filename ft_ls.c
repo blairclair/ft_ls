@@ -116,6 +116,25 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 	
 }
 
+void	define_vars(struct s_dirstuff *lsdirs, struct line_stuff *lstuff, struct timestuff *ts)
+{
+	ts->nantime = NULL;
+	lsdirs->newdir = NULL;
+	lsdirs->num_dir = 0;
+	lsdirs->arrnum = 0;
+	lsdirs->dir_names = malloc(200);
+	lstuff->name = NULL;
+	lsdirs->a = 0;
+	lsdirs->l = 0;
+	lsdirs->r = 0;
+	lsdirs->r2 = 0;
+	lsdirs->reg = 0;
+	lsdirs->t = 0;
+	lsdirs->f = 0;
+	lsdirs->d = 0;
+	lsdirs->g = 0;
+}
+
 int     main(int argc, char *argv[])
 {  
 	struct s_dirstuff lsdirs;
@@ -126,21 +145,7 @@ int     main(int argc, char *argv[])
 
 	arg_list = "";
 	i = 3;
-	ts.nantime = NULL;
-	lsdirs.newdir = NULL;
-	lsdirs.num_dir = 0;
-	lsdirs.arrnum = 0;
-	lsdirs.dir_names = malloc(200);
-	lstuff.name = NULL;
-	lsdirs.a = 0;
-	lsdirs.l = 0;
-	lsdirs.r = 0;
-	lsdirs.r2 = 0;
-	lsdirs.reg = 0;
-	lsdirs.t = 0;
-	lsdirs.f = 0;
-	lsdirs.d = 0;
-	lsdirs.g = 0;
+	define_vars(&lsdirs, &lstuff, &ts);
 	arg_list = ft_strjoin(arg_list, argv[1]);
 
 	if (argc == 1 || !ft_strcmp(arg_list, "-1"))
@@ -156,8 +161,5 @@ int     main(int argc, char *argv[])
 		}
 		parse_args(arg_list, &lsdirs, &ts, &lstuff);
 	}
-	//   ls_r2(".", &lsdirs);*/
-	free(lsdirs.dir_names);
-	free(lsdirs.arreg);
 	return (0);
 }
