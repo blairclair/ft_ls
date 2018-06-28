@@ -99,6 +99,20 @@ int ls_a(char *arg)
 	return (0);
 }
 
+int		ls_d(char	*arg)
+{
+	DIR             *dir1;
+
+	if ((dir1 = opendir(arg)) == NULL)
+	{
+		ft_printf("ls: %s: no such file or directory\n", arg);
+		return (0);
+	}
+	else
+		ft_printf("%s\n", arg);
+	return (0);
+}
+
 int		ls_f(char *arg)
 {
 	struct dirent   *test;
