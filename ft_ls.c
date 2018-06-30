@@ -153,6 +153,10 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 		i = 0;
 		free(lstuff->user);
 		free(lstuff->group);
+		free(lstuff->date);
+		free(lstuff->num);
+		free(lstuff->bsize);
+		free(lstuff->size_padding);
 	}
 	free(lsdirs->arreg);
 	if (lsdirs->t == 1)	

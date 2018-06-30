@@ -182,7 +182,6 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 			lstuff->realname = ft_strjoin(lstuff->realname, test->d_name);
 			stat(lstuff->realname, &statcheck);
 			lstuff->perm[i] = malloc(sizeof(lstuff));
-			lstuff->date[i] = malloc(sizeof(lstuff));
 			arreg[i] = test->d_name;
 			lstuff->perm[i] = get_perm(lstuff->perm[i], statcheck);
 			lstuff->user[i] = get_user(statcheck);
