@@ -166,6 +166,7 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 	newdate[arr_track] = ' ';
 	str_ntime = ft_itoa(ts->nantime[i]);
 	ft_strcat(newdate, str_ntime);
+	free(str_ntime);
 	return (arr_track);
 }
 

@@ -114,6 +114,7 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 	else
 		ls_reg(path);
 	
+	free(path);
 }
 
 void	define_vars(struct s_dirstuff *lsdirs, struct line_stuff *lstuff, struct timestuff *ts)
@@ -133,6 +134,26 @@ void	define_vars(struct s_dirstuff *lsdirs, struct line_stuff *lstuff, struct ti
 	lsdirs->f = 0;
 	lsdirs->d = 0;
 	lsdirs->g = 0;
+}
+
+void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts)
+{
+	int	i;
+
+	i = 0;
+	free(lsdirs->arreg);
+	if (lsdirs->t == 1)	
+	{
+		while (ts->regtime[i])
+		{
+			free(ts->regtime[i]);
+			i++;
+		}
+		free(ts->regtime);
+		free(ts->nantime);	
+		free(ts->realtname);
+	}
+	free(lsdirs->dir_names);
 }
 
 int     main(int argc, char *argv[])
@@ -161,5 +182,7 @@ int     main(int argc, char *argv[])
 		}
 		parse_args(arg_list, &lsdirs, &ts, &lstuff);
 	}
+	free_stuff(&lsdirs, &ts);
+	free(arg_list);
 	return (0);
 }
