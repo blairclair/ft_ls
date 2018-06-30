@@ -139,7 +139,7 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 	int	i;
 
 	i = 0;
-	if (lsdirs->l == 1)
+	if (lsdirs->l == 1 || lsdirs->g == 1)
 	{
 		lstuff->name = lstuff->name;
 		free(lstuff->realname);
@@ -151,6 +151,11 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 		}
 		free(lstuff->perm);
 		i = 0;
+		while (lstuff->date[i])
+		{
+			free(lstuff->date[i]);
+			i++;
+		}
 		free(lstuff->user);
 		free(lstuff->group);
 		free(lstuff->date);

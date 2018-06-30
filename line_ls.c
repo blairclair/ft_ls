@@ -302,26 +302,11 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 			}  
 		}
 		else
-		{
-
 			ft_strcpy(padding, " ");
-		}
-		// padding = ft_itoa(padnum - get_num_len(lstuff->bsize[i]));
 		ft_printf("%s %d %s %s%s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->user[i], 
 				lstuff->group[i], padding, lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
 		i++;
 	} 
 	j = i;
-	/*
-	while (i > 0)
-	{
-		free(lstuff->perm[i]);
-		i--;
-	}
-	free(lstuff->perm);
-	free(lstuff->user);
-	free(lstuff->group);
-	free(lstuff->date);
-	free(lstuff->name);*/
 	return (0);
 }
