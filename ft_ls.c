@@ -207,5 +207,7 @@ int     main(int argc, char *argv[])
 	}
 	free_stuff(&lsdirs, &ts, &lstuff);
 	free(arg_list);
+	while (1)
+	i++;
 	return (0);
 }
