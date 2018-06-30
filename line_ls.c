@@ -182,8 +182,6 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 			lstuff->realname = ft_strjoin(lstuff->realname, test->d_name);
 			stat(lstuff->realname, &statcheck);
 			lstuff->perm[i] = malloc(sizeof(lstuff));
-			lstuff->user[i] = malloc(sizeof(lstuff));
-			lstuff->group[i] = malloc(sizeof(lstuff));
 			lstuff->date[i] = malloc(sizeof(lstuff));
 			arreg[i] = test->d_name;
 			lstuff->perm[i] = get_perm(lstuff->perm[i], statcheck);
@@ -290,10 +288,8 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 		return (0);
 	sort_line(lstuff->name, lstuff);
 	padnum = sort_size(lstuff->size_padding);
-	//  ft_printf("p: %s\n", padding);
 	while (lstuff->name[i])
 	{
-
 		j = get_num_len(lstuff->bsize[i]);
 		if (j < padnum)
 		{
@@ -317,17 +313,16 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 		i++;
 	} 
 	j = i;
+	/*
 	while (i > 0)
 	{
 		free(lstuff->perm[i]);
 		i--;
 	}
 	free(lstuff->perm);
-	// free(lstuff->num);
 	free(lstuff->user);
 	free(lstuff->group);
-	//  free(lstuff->bsize);
 	free(lstuff->date);
-	free(lstuff->name);
+	free(lstuff->name);*/
 	return (0);
 }

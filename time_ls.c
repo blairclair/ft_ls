@@ -80,7 +80,6 @@ int ls_ti(char *arg, struct timestuff *ts)
 			ts->realtname = ft_strjoin(ts->realtname, arg);
 			ts->realtname =ft_strjoin(ts->realtname, "/");
 			ts->realtname = ft_strjoin(ts->realtname, test->d_name);
-		//	arreg[i] = malloc(ft_strlen(test->d_name) + 1);
 			arreg[i] = test->d_name;
 			stat(ts->realtname, &statcheck);
 			ts->regtime[i] = ft_strdup(ctime(&statcheck.st_mtime));
@@ -103,12 +102,6 @@ int ls_ti(char *arg, struct timestuff *ts)
 		i++;
 	}
 	free(date_num);
-	i = 0;
-	/*while (arreg[i])
-	{
-		free(arreg[i]);
-		i++;
-	}*/
 	free(arreg);
 	return (0);
 }

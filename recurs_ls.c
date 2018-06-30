@@ -95,7 +95,9 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 {
 	DIR             *dir1;
 	int				i;
+	int				j;
 
+	j = 0;
 	i = 0;
 	if (!get_files(r2dir->arreg, arg))
 		return (0);
@@ -105,6 +107,11 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 	{
 		if ((dir1 = opendir(r2dir->dir_names[i])) == NULL)
 		{
+			while (r2dir->arreg[j])
+			{
+				free(r2dir->arreg[j]);
+				j++;
+			}
 			return (0);
 		}
 		ft_printf("\n%s\n", r2dir->dir_names[i]);

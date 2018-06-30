@@ -40,10 +40,8 @@ int ls_g(char *arg, struct line_stuff *lstuff)
 		return (0);
 	sort_line(lstuff->name, lstuff);
 	padnum = sort_size(lstuff->size_padding);
-	//  ft_printf("p: %s\n", padding);
 	while (lstuff->name[i])
 	{
-
 		j = get_num_len(lstuff->bsize[i]);
 		if (j < padnum)
 		{
@@ -58,10 +56,8 @@ int ls_g(char *arg, struct line_stuff *lstuff)
 		}
 		else
 		{
-
 			ft_strcpy(padding, " ");
 		}
-		// padding = ft_itoa(padnum - get_num_len(lstuff->bsize[i]));
 		ft_printf("%s %d %s%s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->group[i], padding, lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
 		i++;
 	} 

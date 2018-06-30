@@ -147,7 +147,7 @@ int conv_year(int i, int arr_track, char *newdate, struct timestuff *ts)
 
 int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 {
-	int j;
+	int		j;
 	char    *str_ntime;
 
 	str_ntime = malloc(get_num_len(ts->nantime[i]) + 1);
