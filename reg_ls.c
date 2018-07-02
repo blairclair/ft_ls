@@ -115,6 +115,7 @@ int get_num_reg(char *arg)
 		else
 			i += ft_strlen(test->d_name);
 	}
+	closedir(dir1);
 	return (i);
 }
 
@@ -134,6 +135,7 @@ int get_num_date(char *arg)
 		if (test->d_name[0] != '.')
 			i++;
 	}
+	closedir(dir1);
 	return (i);
 }
 
@@ -164,6 +166,7 @@ int ls_reg(char *arg)
 	sort_reg(arreg);
 	display_ls(arreg);
 	free(arreg);
+	closedir(dir1);
 	return (0);
 }
 

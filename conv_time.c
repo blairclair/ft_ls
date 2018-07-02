@@ -150,7 +150,6 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 	int		j;
 	char    *str_ntime;
 
-	str_ntime = malloc(get_num_len(ts->nantime[i]) + 1);
 	j = 0;
 	while (!ft_isdigit(ts->regtime[i][j]))
 		j++;
@@ -186,13 +185,9 @@ char **conv_full_date(char *arg, struct timestuff *ts)
 		arr_track = conv_day_num(i, arr_track, &*newdate[i], ts);
 		arr_track = conv_year(i, arr_track, &*newdate[i], ts);
 		arr_track = conv_time_day(i, arr_track, &*newdate[i], ts);
-	//	newdate[i][25] = '\0';
 		arr_track = 0;
-		//	printf("size %zu\n", ft_strlen(newdate[i]));
 		i++;
 	}
 	newdate[i] = NULL;
-
-	// display_ls(newdate);
 	return (newdate);
 }

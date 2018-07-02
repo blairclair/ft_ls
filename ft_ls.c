@@ -163,7 +163,7 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 		free(lstuff->bsize);
 		free(lstuff->size_padding);
 	}
-	free(lsdirs->arreg);
+	
 	if (lsdirs->t == 1)	
 	{
 		i = 0;
@@ -177,10 +177,12 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 		free(ts->realtname);
 	}
 	free(lsdirs->dir_names);
+	free(lsdirs->arreg);
 }
 
 int     main(int argc, char *argv[])
 {  
+
 	struct s_dirstuff lsdirs;
 	struct timestuff ts;
 	int     i;
@@ -207,7 +209,6 @@ int     main(int argc, char *argv[])
 	}
 	free_stuff(&lsdirs, &ts, &lstuff);
 	free(arg_list);
-	while (1)
-	i++;
+	sleep(30);
 	return (0);
 }

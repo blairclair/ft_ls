@@ -158,6 +158,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 	struct stat statcheck;
 
 	lstuff->realname = malloc(1);
+	lstuff->realname = "";
 	arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1);
 	lstuff->perm = malloc(sizeof(lstuff) * (get_num_date(arg)  + 1));
 	lstuff->user = malloc(sizeof(lstuff) * (get_num_date(arg) + 1));
@@ -181,7 +182,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 			lstuff->realname =ft_strjoin(lstuff->realname, "/");
 			lstuff->realname = ft_strjoin(lstuff->realname, test->d_name);
 			stat(lstuff->realname, &statcheck);
-			lstuff->perm[i] = malloc(sizeof(lstuff));
+			lstuff->perm[i] = malloc(sizeof(lstuff) * 10);
 			arreg[i] = test->d_name;
 			lstuff->perm[i] = get_perm(lstuff->perm[i], statcheck);
 			lstuff->user[i] = get_user(statcheck);
@@ -200,7 +201,12 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 	lstuff->group[i] = NULL;
 	lstuff->date[i] = NULL;
 	return (arreg);
-}
+}/*
+void	this(struct sortstuff *s_stuff)
+{
+	//	free(s_stuff->datesort);
+		free(s_stuff->permsort);
+}*/
 
 char    **sort_line(char **arreg, struct line_stuff *lstuff)
 {
@@ -245,6 +251,7 @@ char    **sort_line(char **arreg, struct line_stuff *lstuff)
 		lstuff->user[j + 1] = s_stuff.usersort;
 		i++;
 	}
+	//this(&s_stuff);
 	return (arreg);
 }
 
@@ -308,5 +315,6 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 		i++;
 	} 
 	j = i;
+	free(padding);
 	return (0);
 }

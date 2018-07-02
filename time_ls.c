@@ -63,7 +63,7 @@ int ls_ti(char *arg, struct timestuff *ts)
 	char             **date_num;
 
 	arreg = malloc(get_num_reg(arg) + 1);
-	ts->realtname = malloc(1);
+	ts->realtname = malloc(2);
 	ts->nantime = malloc(sizeof(ts) * (get_num_date(arg) + 1));
 	ts->regtime = malloc(sizeof(ts) * (get_num_date(arg) + 1)); 
 	i = 0;
@@ -72,10 +72,12 @@ int ls_ti(char *arg, struct timestuff *ts)
 		ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
 	}
+	ft_strcpy(ts->realtname, " ");
 	while ((test = readdir(dir1)) != NULL)
 	{
 		if (test->d_name[0] != '.')
 		{
+			free(ts->realtname);
 			ft_bzero(ts->realtname, ft_strlen(ts->realtname));
 			ts->realtname = ft_strjoin(ts->realtname, arg);
 			ts->realtname =ft_strjoin(ts->realtname, "/");
@@ -91,8 +93,9 @@ int ls_ti(char *arg, struct timestuff *ts)
 	arreg[i] = NULL;
 	ts->regtime[i] = NULL;
 	ts->nantime[i] = '\0';
+
 	date_num = conv_full_date(arg, ts);
-	sort_time(arreg, date_num);
+	//sort_time(arreg, date_num);
 	display_ls(arreg);
 	
 	i = 0;
@@ -102,6 +105,8 @@ int ls_ti(char *arg, struct timestuff *ts)
 		i++;
 	}
 	free(date_num);
+	i = 0;
 	free(arreg);
+	closedir(dir1);
 	return (0);
 }

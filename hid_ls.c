@@ -69,6 +69,7 @@ int ls_r(char *arg)
 	sort_back(arreg);
 	display_ls(arreg);
 	free(arreg);
+	closedir(dir1);
 	return (0);
 }
 
@@ -96,6 +97,7 @@ int ls_a(char *arg)
 	sort_reg(arreg);
 	display_ls(arreg);
 	free(arreg);
+	closedir(dir1);
 	return (0);
 }
 
@@ -110,6 +112,7 @@ int		ls_d(char	*arg)
 	}
 	else
 		ft_printf("%s\n", arg);
+	closedir(dir1);
 	return (0);
 }
 
@@ -141,5 +144,6 @@ int		ls_f(char *arg)
 	arreg[i] = NULL;
 	display_ls(arreg);
 	free(arreg);
+	closedir(dir1);
 	return (0);
 }

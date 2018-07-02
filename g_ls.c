@@ -61,5 +61,6 @@ int ls_g(char *arg, struct line_stuff *lstuff)
 		ft_printf("%s %d %s%s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->group[i], padding, lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
 		i++;
 	} 
+	free(padding);
 	return (0);
 }
