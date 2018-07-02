@@ -174,7 +174,7 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 		}
 		free(ts->regtime);
 		free(ts->nantime);	
-		free(ts->realtname);
+
 	}
 	free(lsdirs->dir_names);
 	free(lsdirs->arreg);

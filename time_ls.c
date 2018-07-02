@@ -62,6 +62,7 @@ int ls_ti(char *arg, struct timestuff *ts)
 	time_t           ti;
 	char             **date_num;
 
+	i = 0;
 	arreg = malloc(get_num_reg(arg) + 1);
 	ts->realtname = malloc(2);
 	ts->nantime = malloc(sizeof(ts) * (get_num_date(arg) + 1));
@@ -77,12 +78,12 @@ int ls_ti(char *arg, struct timestuff *ts)
 	{
 		if (test->d_name[0] != '.')
 		{
-			free(ts->realtname);
 			ft_bzero(ts->realtname, ft_strlen(ts->realtname));
-			ts->realtname = ft_strjoin(ts->realtname, arg);
-			ts->realtname =ft_strjoin(ts->realtname, "/");
-			ts->realtname = ft_strjoin(ts->realtname, test->d_name);
+			ts->realtname = ft_strcat(ts->realtname, arg);
+			ts->realtname =ft_strcat(ts->realtname, "/");
+			ts->realtname = ft_strcat(ts->realtname, test->d_name);
 			arreg[i] = test->d_name;
+	
 			stat(ts->realtname, &statcheck);
 			ts->regtime[i] = ft_strdup(ctime(&statcheck.st_mtime));
 			ti = statcheck.st_mtimespec.tv_nsec;
@@ -90,12 +91,13 @@ int ls_ti(char *arg, struct timestuff *ts)
 			i++;
 		}
 	}
+	free(ts->realtname);
 	arreg[i] = NULL;
 	ts->regtime[i] = NULL;
 	ts->nantime[i] = '\0';
 
 	date_num = conv_full_date(arg, ts);
-	//sort_time(arreg, date_num);
+	sort_time(arreg, date_num);
 	display_ls(arreg);
 	
 	i = 0;
