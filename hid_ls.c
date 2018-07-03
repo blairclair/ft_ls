@@ -131,6 +131,7 @@ int		ls_f(char *arg)
 	if ((dir1 = opendir(arg)) == NULL)
 	{
 		ft_printf("ls: %s: no such file or directory\n", arg);
+		free(arreg);
 		return (0);
 	}
 	while ((test = readdir(dir1)) != NULL )

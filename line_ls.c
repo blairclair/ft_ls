@@ -145,6 +145,7 @@ char    *get_date(char *date, struct stat statcheck)
 		i++;
 	}
 	date2[j] = '\0';
+	free(date);
 	return (date2);
 }
 
@@ -200,13 +201,9 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 	lstuff->user[i] = NULL;
 	lstuff->group[i] = NULL;
 	lstuff->date[i] = NULL;
+	closedir(dir1);
 	return (arreg);
-}/*
-void	this(struct sortstuff *s_stuff)
-{
-	//	free(s_stuff->datesort);
-		free(s_stuff->permsort);
-}*/
+}
 
 char    **sort_line(char **arreg, struct line_stuff *lstuff)
 {
@@ -307,6 +304,7 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 				j++;
 				k++;
 			}  
+			free(padding);
 		}
 		else
 			ft_strcpy(padding, " ");
@@ -315,6 +313,6 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 		i++;
 	} 
 	j = i;
-	free(padding);
+	
 	return (0);
 }

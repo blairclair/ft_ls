@@ -19,22 +19,47 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+char	*ft_strjoin3(char *s1, char *s2)
+{
+	char	*s3;
+	int		i;
+	
+	i = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	else
+	{
+		s3 = (char*)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+		if (s3 == NULL)
+			return (NULL);
+		ft_strcpy(s3, s1);
+		ft_strcat(s3, s2);
+		while (s3[i])
+			i++;
+		s3[i] = '\0';
+	}
+	free(s1);
+	return (s3);
+}
+
+
 int		countdir(char *arg, struct s_dirstuff *r2dir)
 {
 	struct dirent   *test;
 	DIR             *dir1;
 	struct stat     statcheck;
-
+	r2dir->newdir = malloc(200);
 	if ((dir1 = opendir(arg)) == NULL)
-	{    return (r2dir->num_dir);
-		closedir(dir1);
-	}
+	    return (r2dir->num_dir);
 	while ((test = readdir(dir1)) != NULL)
 	{
 		if (test->d_name[0] != '.')
 		{
-			r2dir->newdir = ft_strjoin(arg, "/");
-			r2dir->newdir = ft_strjoin(r2dir->newdir, test->d_name);
+			
+			ft_bzero(r2dir->newdir, ft_strlen(r2dir->newdir));
+			r2dir->newdir = ft_strcat(r2dir->newdir, arg);
+			r2dir->newdir = ft_strcat(r2dir->newdir, "/");
+			r2dir->newdir = ft_strcat(r2dir->newdir, test->d_name);
 			stat(r2dir->newdir, &statcheck);
 			if (S_ISDIR(statcheck.st_mode))//checks if isdirectory
 			{
@@ -64,7 +89,6 @@ int		get_files(struct s_dirstuff *r2dir, char *arg)
 	}
 	while ((test = readdir(dir1)) != NULL)
 	{
-	//	r2dir->arreg[i] = malloc(20);
 		if (test->d_name[0] != '.')
 		{
 			r2dir->arreg[i] = test->d_name;
@@ -74,6 +98,7 @@ int		get_files(struct s_dirstuff *r2dir, char *arg)
 	r2dir->arreg[i + 1] = NULL;
 	sort_reg(r2dir->arreg);
 	display_ls(r2dir->arreg);
+	closedir(dir1);
 	return (i);
 }
 
@@ -95,15 +120,14 @@ void	free_r2(struct s_dirstuff *r2dir)
 	int	j;
 
 	j = 0;
-	
-	
 	free(r2dir->newdir);
-	
 	while (r2dir->dir_names[j])
 	{
 		free(r2dir->dir_names[j]);
 		j++;
 	}
+	j = 0;
+
 }
 int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 {
@@ -121,7 +145,7 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 	{
 		if ((dir1 = opendir(r2dir->dir_names[i])) == NULL)
 		{
-			free_r2(r2dir);
+			ft_printf("ls: %s: no such file or directory\n", arg);
 			return (0);
 		}
 		ft_printf("\n%s\n", r2dir->dir_names[i]);
@@ -129,6 +153,7 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 		get_files(r2dir, r2dir->dir_names[i]);
 		i++;
 	}
+	closedir(dir1);
 	free_r2(r2dir);
 	return (0);
 }

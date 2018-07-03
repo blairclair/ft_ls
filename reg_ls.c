@@ -152,6 +152,7 @@ int ls_reg(char *arg)
 	if ((dir1 = opendir(arg)) == NULL)
 	{
 		ft_printf("ls: %s: no such file or directory\n", arg);
+		free(arreg);
 		return (0);
 	}
 	while ((test = readdir(dir1)) != NULL )
@@ -167,6 +168,6 @@ int ls_reg(char *arg)
 	display_ls(arreg);
 	free(arreg);
 	closedir(dir1);
-	return (0);
+	return (1);
 }
 

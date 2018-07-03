@@ -28,6 +28,7 @@
 
 int ls_g(char *arg, struct line_stuff *lstuff)
 {
+	
 	int     i;
 	char    *padding;
 	int     padnum;
@@ -53,14 +54,14 @@ int ls_g(char *arg, struct line_stuff *lstuff)
 				j++;
 				k++;
 			}  
+			free(padding);
 		}
 		else
-		{
 			ft_strcpy(padding, " ");
-		}
 		ft_printf("%s %d %s%s %d %s %s\n", lstuff->perm[i], lstuff->num[i], lstuff->group[i], padding, lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
 		i++;
 	} 
-	free(padding);
+	j = i;
+	
 	return (0);
 }
