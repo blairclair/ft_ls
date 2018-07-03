@@ -138,7 +138,7 @@ char    *get_date(char *date, struct stat statcheck)
 	date2 = malloc(18);
 
 	date = ft_strdup(ctime(&statcheck.st_mtime));
-	while (i < 19)
+	while (i < 16)
 	{
 		date2[j] = date[i];
 		j++;
@@ -158,7 +158,6 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 	struct stat statcheck;
 
 	lstuff->realname = malloc(1);
-	lstuff->realname = "";
 	arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1);
 	lstuff->perm = malloc(sizeof(lstuff) * (get_num_date(arg)  + 1));
 	lstuff->user = malloc(sizeof(lstuff) * (get_num_date(arg) + 1));
@@ -168,6 +167,7 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 	lstuff->bsize = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
 	lstuff->size_padding = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
 	i = 0;
+	ft_strcpy(lstuff->realname, " ");
 	if ((dir1 = opendir(arg)) == NULL)
 	{
 		ft_printf("ls: %s: no such file or directory\n", arg);
@@ -178,9 +178,9 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 		if (test->d_name[0] != '.')
 		{
 			ft_bzero(lstuff->realname, ft_strlen(lstuff->realname));
-			lstuff->realname = ft_strjoin(lstuff->realname, arg);
-			lstuff->realname =ft_strjoin(lstuff->realname, "/");
-			lstuff->realname = ft_strjoin(lstuff->realname, test->d_name);
+			lstuff->realname = ft_strcat(lstuff->realname, arg);
+			lstuff->realname =ft_strcat(lstuff->realname, "/");
+			lstuff->realname = ft_strcat(lstuff->realname, test->d_name);
 			stat(lstuff->realname, &statcheck);
 			lstuff->perm[i] = malloc(sizeof(lstuff) * 10);
 			arreg[i] = test->d_name;

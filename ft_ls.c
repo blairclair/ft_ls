@@ -141,8 +141,9 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 	i = 0;
 	if (lsdirs->l == 1 || lsdirs->g == 1)
 	{
-		lstuff->name = lstuff->name;
+	//	lstuff->name = lstuff->name;
 		free(lstuff->realname);
+		i = 0;
 		free(lstuff->name);
 		while (lstuff->perm[i])
 		{
@@ -209,6 +210,6 @@ int     main(int argc, char *argv[])
 	}
 	free_stuff(&lsdirs, &ts, &lstuff);
 	free(arg_list);
-	sleep(30);
+//	sleep(30);
 	return (0);
 }
