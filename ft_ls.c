@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 10:02:29 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/06/26 14:07:04 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/07/03 19:53:18 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,8 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 			free(ts->regtime[i]);
 			i++;
 		}
+		i = 0;
+
 		free(ts->regtime);
 		free(ts->nantime);	
 
@@ -208,6 +210,5 @@ int     main(int argc, char *argv[])
 	}
 	free_stuff(&lsdirs, &ts, &lstuff);
 	free(arg_list);
-	//sleep(30);
 	return (0);
 }

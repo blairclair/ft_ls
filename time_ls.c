@@ -24,6 +24,43 @@
 #include <pwd.h>
 #include <stdlib.h>
 
+int		get_s_num_ls(long long n)
+{
+	int	i;
+
+	if (n < 0)
+		i = 3;
+	else
+		i = 2;
+	while ((n = n / 10))
+		i++;
+	i--;
+	return (i);
+}
+
+char	*ft_ltoa_ls(long long n)
+{
+	char	*str;
+	int		size;
+	int		neg;
+
+	neg = 1;
+	if (n == '\0')
+		return ("0");
+	size = get_s_num_ls(n);
+	str = malloc(size);
+	if (n < 0)
+		neg = -1;
+	str[size--] = '\0';
+	while (n)
+	{
+		str[size--] = neg * (n % 10) + '0';
+		n = n / 10;
+	}
+	if (neg == -1)
+		str[size--] = '-';
+	return (str);
+}
 char    **sort_time(char **arreg, char **arrtime)
 {
 	int     i;
@@ -54,6 +91,8 @@ char    **sort_time(char **arreg, char **arrtime)
 
 int ls_ti(char *arg, struct timestuff *ts) 
 {
+	char	**date_num;
+	/*
 	struct dirent   *test;
 	DIR             *dir1;
 	char            **arreg;
@@ -64,13 +103,13 @@ int ls_ti(char *arg, struct timestuff *ts)
 
 	i = 0;
 	arreg = malloc(get_num_reg(arg) + 1);
-	ts->realtname = malloc(2);
+	ts->realtname = malloc(200);
 	ts->nantime = malloc(sizeof(ts) * (get_num_date(arg) + 1));
 	ts->regtime = malloc(sizeof(ts) * (get_num_date(arg) + 1)); 
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+	//	ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
 	}
 	ft_strcpy(ts->realtname, " ");
@@ -79,9 +118,9 @@ int ls_ti(char *arg, struct timestuff *ts)
 		if (test->d_name[0] != '.')
 		{
 			ft_bzero(ts->realtname, ft_strlen(ts->realtname));
-			ts->realtname = ft_strcat(ts->realtname, arg);
-			ts->realtname =ft_strcat(ts->realtname, "/");
-			ts->realtname = ft_strcat(ts->realtname, test->d_name);
+			ts->realtname = ft_strjoin(ts->realtname, arg);
+			ts->realtname =ft_strjoin(ts->realtname, "/");
+			ts->realtname = ft_strjoin(ts->realtname, test->d_name);
 			arreg[i] = test->d_name;
 	
 			stat(ts->realtname, &statcheck);
@@ -95,7 +134,47 @@ int ls_ti(char *arg, struct timestuff *ts)
 	arreg[i] = NULL;
 	ts->regtime[i] = NULL;
 	ts->nantime[i] = '\0';
+*/
+int             i;
+    char            **arreg;
+    DIR             *dir1;
+    struct dirent   *test;
+    struct stat     statcheck;
+    time_t          ntime;
 
+    i = 0;
+	arreg = malloc(get_num_reg(arg) * sizeof(arreg) + 1);
+    ts->realtname = malloc(2);
+    ts->regtime = malloc(sizeof(ts->regtime) * (get_num_date(arg) * 24 + 1)); 
+    ts->nantime = (char**)malloc(sizeof(ts->nantime) * get_num_date(arg) * 10);
+    if ((dir1 = opendir(arg)) == NULL)
+	{
+       	printf("ls: %s: no such file or directory\n", arg);
+        return (0);
+    }
+  
+    strcpy(ts->realtname, " ");
+    while ((test = readdir(dir1)) != NULL)
+	{
+        if (test->d_name[0] != '.')
+		{
+			bzero(ts->realtname, strlen(ts->realtname));
+            ts->realtname = ft_strjoin(ts->realtname, arg);
+			ts->realtname = ft_strjoin(ts->realtname, "/");//keep an eye
+			ts->realtname = ft_strjoin(ts->realtname, test->d_name);
+          //  printf("tname: %s\n", ts->realtname);
+            arreg[i] = test->d_name;
+            stat(ts->realtname, &statcheck);
+            ts->regtime[i] = strdup(ctime(&statcheck.st_mtime));
+			ntime = statcheck.st_mtimespec.tv_nsec;
+            ts->nantime[i] = ft_ltoa_ls(ntime);
+            i++;
+        }
+    }
+    arreg[i] = NULL;
+    ts->nantime[i] = NULL;
+    ts->regtime[i] = NULL;
+    i = 0;
 	date_num = conv_full_date(arg, ts);
 	sort_time(arreg, date_num);
 	display_ls(arreg);

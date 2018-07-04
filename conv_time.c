@@ -148,7 +148,6 @@ int conv_year(int i, int arr_track, char *newdate, struct timestuff *ts)
 int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 {
 	int		j;
-	char    *str_ntime;
 
 	j = 0;
 	while (!ft_isdigit(ts->regtime[i][j]))
@@ -163,9 +162,8 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 		j++;
 	}
 	newdate[arr_track] = ' ';
-	str_ntime = ft_itoa(ts->nantime[i]);
-	ft_strcat(newdate, str_ntime);
-	free(str_ntime);
+//	printf("s: %zu\n", ft_strlen(newdate));
+	newdate = ft_strjoin(newdate, ts->nantime[i]);
 	return (arr_track);
 }
 

@@ -40,7 +40,7 @@ struct s_dirstuff{
 
 struct timestuff{
 	char      **regtime;
-	long long *nantime;
+	char 		**nantime;
 	char		*realtname;
 
 };
@@ -98,6 +98,7 @@ char    *get_date(char *date, struct stat statcheck);
 char    **get_arr(char *arg, struct line_stuff *lstuff);
 char    **sort_line(char **arreg, struct line_stuff *lstuff);
 int		sort_size(int *bsize);
-int ls_g(char *arg, struct line_stuff *lstuff);
+int		ls_g(char *arg, struct line_stuff *lstuff);
+char	*ft_ltoa_ls(long long n);
 
 #endif
