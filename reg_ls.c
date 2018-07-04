@@ -96,7 +96,7 @@ char    **sort_reg(char **arreg)
 
 int get_num_reg(char *arg)
 {
-	struct dirent *test;
+		struct dirent *test;
 	DIR *dir1;
 	int     i;
 
@@ -105,15 +105,12 @@ int get_num_reg(char *arg)
 	{
 		return (0);
 	}
-	while (1)
+	while ((test = readdir(dir1)) != NULL)
 	{
-		test = readdir(dir1);
-		if (!test)
-			break ;
-		if (test->d_name[0] == '.')
-			test = readdir(dir1);
-		else
-			i += ft_strlen(test->d_name);
+        if (test->d_name[0] != '.')
+		{
+			i += strlen(test->d_name);
+        }
 	}
 	closedir(dir1);
 	return (i);
