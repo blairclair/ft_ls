@@ -47,7 +47,6 @@ struct	s_timestuff
 	char		*realtname;
 	char		**tmpregtimei;
 	char		**tmpnantimei;
-
 };
 
 struct	s_line_stuff
@@ -112,5 +111,7 @@ int		ls_g(char *arg, struct s_line_stuff *lstuff);
 char	*ft_ltoa_ls(long long n);
 void	free_l(struct s_line_stuff *lstuff);
 int		get_reg_arr(char **arreg, struct dirent *test, int i);
+char	*get_padding(char *padding, int padnum,
+					int i, struct s_line_stuff *lstuff);
 
 #endif

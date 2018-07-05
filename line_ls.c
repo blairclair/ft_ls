@@ -32,7 +32,7 @@ void	user_perm(char *perm, struct stat statcheck)
 		perm[1] = '-';
 	if (statcheck.st_mode & S_IWUSR)
 		perm[2] = 'w';
-	else 
+	else
 		perm[2] = '-';
 	if (statcheck.st_mode & S_IXUSR)
 		perm[3] = 'x';
@@ -78,7 +78,7 @@ char	*get_perm(char *perm, struct stat statcheck)
 	if (S_ISDIR(statcheck.st_mode))
 		perm[0] = 'd';
 	else
-		perm[0] = '-'; 
+		perm[0] = '-';
 	user_perm(&*perm, statcheck);
 	group_perm(&*perm, statcheck);
 	other_perm(&*perm, statcheck);
@@ -95,9 +95,9 @@ int		get_num(struct stat statcheck)
 
 char	*get_user(struct stat statcheck)
 {
-	struct  passwd *pwd;
-	unsigned int    iduser;
-	char        *pwname2;
+	struct passwd	*pwd;
+	unsigned int	iduser;
+	char			*pwname2;
 
 	iduser = statcheck.st_uid;
 	pwd = getpwuid(iduser);
@@ -108,9 +108,9 @@ char	*get_user(struct stat statcheck)
 
 char	*get_group(struct stat statcheck)
 {
-	struct  group *grp;
-	unsigned int    idgroup;
-	char        *strgrp;
+	struct group	*grp;
+	unsigned int	idgroup;
+	char			*strgrp;
 
 	idgroup = statcheck.st_gid;
 	grp = getgrgid(idgroup);
@@ -121,7 +121,7 @@ char	*get_group(struct stat statcheck)
 
 int		get_file_size(struct stat statcheck)
 {
-	int     bsize;
+	int	bsize;
 
 	bsize = statcheck.st_size;
 	return (bsize);
@@ -129,14 +129,13 @@ int		get_file_size(struct stat statcheck)
 
 char	*get_date(char *date, struct stat statcheck)
 {
-	int     i;
-	char    *date2;
-	int     j;
+	int		i;
+	char	*date2;
+	int		j;
 
 	j = 0;
 	i = 4;
 	date2 = malloc(18);
-
 	date = ft_strdup(ctime(&statcheck.st_mtime));
 	while (i < 16)
 	{
@@ -155,14 +154,15 @@ void	define_lstuff(struct s_line_stuff *lstuff, char *arg)
 	lstuff->name = malloc(sizeof(lstuff->name) * get_num_reg(arg) + 1);
 	lstuff->perm = malloc(sizeof(lstuff) * (get_num_date(arg) * 10 + 1));
 	lstuff->user = malloc(sizeof(lstuff) * (get_num_date(arg) * 8 + 1));
-	lstuff->group = malloc(sizeof(lstuff) * (get_num_date(arg)  * 15+ 1));
-	lstuff->date = malloc(sizeof(lstuff) *(get_num_date(arg) * 8 + 1));
-	lstuff->num = malloc(sizeof(lstuff) *(get_num_date(arg) * 5 + 1));
-	lstuff->bsize = malloc(sizeof(lstuff) *(get_num_date(arg) * 5 + 1));
-	lstuff->size_padding = malloc(sizeof(lstuff) *(get_num_date(arg) * 10+ 1));
+	lstuff->group = malloc(sizeof(lstuff) * (get_num_date(arg) * 15 + 1));
+	lstuff->date = malloc(sizeof(lstuff) * (get_num_date(arg) * 8 + 1));
+	lstuff->num = malloc(sizeof(lstuff) * (get_num_date(arg) * 5 + 1));
+	lstuff->bsize = malloc(sizeof(lstuff) * (get_num_date(arg) * 5 + 1));
+	lstuff->size_padding = malloc(sizeof(lstuff) * get_num_date(arg) * 10 + 1);
 }
 
-int		get_line_arr(struct s_line_stuff *lstuff, struct dirent *test, char *arg, int i)
+int		get_line_arr(struct s_line_stuff *lstuff, struct dirent *test,
+					char *arg, int i)
 {
 	struct stat statcheck;
 
@@ -170,7 +170,7 @@ int		get_line_arr(struct s_line_stuff *lstuff, struct dirent *test, char *arg, i
 	{
 		ft_bzero(lstuff->realname, ft_strlen(lstuff->realname));
 		lstuff->realname = ft_strcat(lstuff->realname, arg);
-		lstuff->realname =ft_strcat(lstuff->realname, "/");
+		lstuff->realname = ft_strcat(lstuff->realname, "/");
 		lstuff->realname = ft_strcat(lstuff->realname, test->d_name);
 		stat(lstuff->realname, &statcheck);
 		lstuff->perm[i] = malloc(sizeof(lstuff) * 15);
@@ -189,9 +189,9 @@ int		get_line_arr(struct s_line_stuff *lstuff, struct dirent *test, char *arg, i
 
 char	**get_arr(char *arg, struct s_line_stuff *lstuff)
 {
-	struct dirent   *test;
-	DIR             *dir1;
-	int             i;
+	struct dirent	*test;
+	DIR				*dir1;
+	int				i;
 
 	define_lstuff(lstuff, arg);
 	i = 0;
@@ -201,7 +201,7 @@ char	**get_arr(char *arg, struct s_line_stuff *lstuff)
 		ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
 	}
-	while ((test = readdir(dir1)) != NULL )
+	while ((test = readdir(dir1)) != NULL)
 		i = get_line_arr(lstuff, test, arg, i);
 	lstuff->name[i] = NULL;
 	lstuff->perm[i] = NULL;
@@ -212,7 +212,8 @@ char	**get_arr(char *arg, struct s_line_stuff *lstuff)
 	return (lstuff->name);
 }
 
-void	sort_line_p1(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff, int i)
+void	sort_line_p1(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff,
+					int i)
 {
 	s_stuff->bsizesort = lstuff->bsize[i];
 	s_stuff->datesort = lstuff->date[i];
@@ -234,7 +235,8 @@ void	sort_line_p2(struct s_line_stuff *lstuff, int j)
 	lstuff->user[j + 1] = lstuff->user[j];
 }
 
-void	sort_line_p3(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff, int j)
+void	sort_line_p3(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff,
+					int j)
 {
 	lstuff->bsize[j + 1] = s_stuff->bsizesort;
 	lstuff->date[j + 1] = s_stuff->datesort;
@@ -244,12 +246,13 @@ void	sort_line_p3(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff, int 
 	lstuff->perm[j + 1] = s_stuff->permsort;
 	lstuff->user[j + 1] = s_stuff->usersort;
 }
+
 char	**sort_line(char **arreg, struct s_line_stuff *lstuff)
 {
-	int     i;
-	int     j;
-	char    *x2;
-	struct s_sortstuff s_stuff;
+	int					i;
+	int					j;
+	char				*x2;
+	struct s_sortstuff	s_stuff;
 
 	j = 0;
 	i = 1;
@@ -271,12 +274,11 @@ char	**sort_line(char **arreg, struct s_line_stuff *lstuff)
 	return (arreg);
 }
 
-
 int		sort_size(int *bsize)
 {
-	int     i;
-	int     j;
-	int    x;
+	int	i;
+	int	j;
+	int	x;
 
 	j = 0;
 	i = 1;
@@ -295,14 +297,13 @@ int		sort_size(int *bsize)
 	return (bsize[0]);
 }
 
-
 int		ls_l(char *arg, struct s_line_stuff *lstuff)
 {
-	int     i;
-	char    *padding;
-	int     padnum;
-	int     j;
-	int     k;
+	int		i;
+	char	*padding;
+	int		padnum;
+	int		j;
+	int		k;
 
 	i = 0;
 	k = 0;
@@ -312,26 +313,12 @@ int		ls_l(char *arg, struct s_line_stuff *lstuff)
 	padnum = sort_size(lstuff->size_padding);
 	while (lstuff->name[i])
 	{
-		j = get_num_len(lstuff->bsize[i]);
-		if (j < padnum)
-		{
-			k = 0;
-			padding = malloc(padnum - j);
-			while (j <= padnum)
-			{
-				padding[k] = ' ';
-				j++;
-				k++;
-			}  
-
-		}
-		else
-			ft_strcpy(padding, " ");
+		padding = get_padding(*&padding, padnum, i, lstuff);
 		ft_printf("%s %d %s %s%s %d %s %s\n", lstuff->perm[i], lstuff->num[i],
 					lstuff->user[i], lstuff->group[i], padding,
 					lstuff->bsize[i], lstuff->date[i], lstuff->name[i]);
 		i++;
-	} 
+	}
 	j = i;
 	free(padding);
 	free_l(lstuff);
