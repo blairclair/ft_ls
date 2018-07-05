@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/16 13:42:08 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/06/26 14:07:47 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/07/05 13:05:42 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-char    **sort_back(char **arreg)
+char	**sort_back(char **arreg)
 {
-	int     i;
-	int     j;
-	char    *x;
+	int		i;
+	int		j;
+	char	*x;
 
 	j = 0;
 	i = 1;
@@ -42,12 +42,12 @@ char    **sort_back(char **arreg)
 	return (arreg);
 }
 
-int ls_r(char *arg)
+int		ls_r(char *arg)
 {
-	struct dirent   *test;
-	DIR             *dir1;
-	char            **arreg;
-	int             i;
+	struct dirent	*test;
+	DIR				*dir1;
+	char			**arreg;
+	int				i;
 
 	if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
 		return (0);
@@ -57,14 +57,8 @@ int ls_r(char *arg)
 		ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
 	}
-	while ((test = readdir(dir1)) != NULL )
-	{
-		if (test->d_name[0] != '.')
-		{
-			arreg[i] = test->d_name;
-			i++;
-		}
-	}
+	while ((test = readdir(dir1)) != NULL)
+		i = get_reg_arr(arreg, test, i);
 	arreg[i] = NULL;
 	sort_back(arreg);
 	display_ls(arreg);
@@ -73,12 +67,12 @@ int ls_r(char *arg)
 	return (0);
 }
 
-int ls_a(char *arg)
+int		ls_a(char *arg)
 {
-	struct dirent   *test;
-	DIR             *dir1;
-	char            **arreg;
-	int             i;
+	struct dirent	*test;
+	DIR				*dir1;
+	char			**arreg;
+	int				i;
 
 	if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
 		return (0);
@@ -88,7 +82,7 @@ int ls_a(char *arg)
 		ft_printf("ls: %s: no such file or directory\n", arg);
 		return (0);
 	}
-	while ((test = readdir(dir1)) != NULL )
+	while ((test = readdir(dir1)) != NULL)
 	{
 		arreg[i] = test->d_name;
 		i++;
@@ -101,9 +95,9 @@ int ls_a(char *arg)
 	return (0);
 }
 
-int		ls_d(char	*arg)
+int		ls_d(char *arg)
 {
-	DIR             *dir1;
+	DIR	*dir1;
 
 	if ((dir1 = opendir(arg)) == NULL)
 	{
@@ -116,15 +110,24 @@ int		ls_d(char	*arg)
 	return (0);
 }
 
+int		get_f_r(int i, struct dirent *test, char **arreg)
+{
+	if (ft_strcmp(test->d_name, ".") && ft_strcmp(test->d_name, ".."))
+	{
+		arreg[i] = test->d_name;
+		i++;
+	}
+	return (i);
+}
+
 int		ls_f(char *arg)
 {
-	struct dirent   *test;
-	DIR             *dir1;
-	char            **arreg;
-	int             i;
+	struct dirent	*test;
+	DIR				*dir1;
+	char			**arreg;
+	int				i;
 
-	if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
-		return (0);
+	arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1);
 	arreg[0] = ".";
 	arreg[1] = "..";
 	i = 2;
@@ -134,14 +137,8 @@ int		ls_f(char *arg)
 		free(arreg);
 		return (0);
 	}
-	while ((test = readdir(dir1)) != NULL )
-	{
-		if (ft_strcmp(test->d_name, ".") != 0 && ft_strcmp(test->d_name, "..") != 0)
-		{
-			arreg[i] = test->d_name;
-			i++;
-		}
-	}
+	while ((test = readdir(dir1)) != NULL)
+		i = get_f_r(i, test, arreg);
 	arreg[i] = NULL;
 	display_ls(arreg);
 	free(arreg);

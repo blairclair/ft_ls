@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 10:06:30 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/06/26 14:09:20 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/07/05 12:37:16 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-char     *ft_strcmp_ls_i(char *ss1, char *ss2)
-{
-	int    temp_s1;
-	int    temp_s2;
-
-	temp_s1 = ft_atoi(ss1);
-	temp_s2 = ft_atoi(ss2);
-	if (ss1 == ss2)
-		return (0);
-	else if (ss1 > ss2)
-		return (ss2);
-	else
-		return (ss1);
-}
-
 char	*ft_strcmp_ls(char *ss1, char *ss2)
 {
-	char    *temp_s1;
-	char    *temp_s2;
+	char	*temp_s1;
+	char	*temp_s2;
 
 	temp_s1 = ss1;
 	temp_s2 = ss2;
@@ -58,7 +43,7 @@ char	*ft_strcmp_ls(char *ss1, char *ss2)
 	return (NULL);
 }
 
-void    display_ls(char **arreg)
+void	display_ls(char **arreg)
 {
 	int i;
 
@@ -70,11 +55,11 @@ void    display_ls(char **arreg)
 	}
 }
 
-char    **sort_reg(char **arreg)
+char	**sort_reg(char **arreg)
 {
-	int     i;
-	int     j;
-	char    *x;
+	int		i;
+	int		j;
+	char	*x;
 
 	j = 0;
 	i = 1;
@@ -93,12 +78,11 @@ char    **sort_reg(char **arreg)
 	return (arreg);
 }
 
-
-int get_num_reg(char *arg)
+int		get_num_reg(char *arg)
 {
-		struct dirent *test;
-	DIR *dir1;
-	int     i;
+	struct dirent	*test;
+	DIR				*dir1;
+	int				i;
 
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
@@ -107,20 +91,20 @@ int get_num_reg(char *arg)
 	}
 	while ((test = readdir(dir1)) != NULL)
 	{
-        if (test->d_name[0] != '.')
+		if (test->d_name[0] != '.')
 		{
 			i += ft_strlen(test->d_name);
-        }
+		}
 	}
 	closedir(dir1);
 	return (i);
 }
 
-int get_num_date(char *arg)
+int		get_num_date(char *arg)
 {
-	struct dirent *test;
-	DIR *dir1;
-	int     i;
+	struct dirent	*test;
+	DIR				*dir1;
+	int				i;
 
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
@@ -136,12 +120,22 @@ int get_num_date(char *arg)
 	return (i);
 }
 
-int ls_reg(char *arg)
+int		get_reg_arr(char **arreg, struct dirent *test, int i)
 {
-	struct dirent   *test;
-	DIR             *dir1;
-	char            **arreg;
-	int             i;
+	if (test->d_name[0] != '.')
+	{
+		arreg[i] = test->d_name;
+		i++;
+	}
+	return (i);
+}
+
+int		ls_reg(char *arg)
+{
+	struct dirent	*test;
+	DIR				*dir1;
+	char			**arreg;
+	int				i;
 
 	if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
 		return (0);
@@ -152,14 +146,8 @@ int ls_reg(char *arg)
 		free(arreg);
 		return (0);
 	}
-	while ((test = readdir(dir1)) != NULL )
-	{
-		if (test->d_name[0] != '.')
-		{
-			arreg[i] = test->d_name;
-			i++;
-		}
-	}
+	while ((test = readdir(dir1)) != NULL)
+		i = get_reg_arr(arreg, test, i);
 	arreg[i] = NULL;
 	sort_reg(arreg);
 	display_ls(arreg);
@@ -167,4 +155,3 @@ int ls_reg(char *arg)
 	closedir(dir1);
 	return (1);
 }
-

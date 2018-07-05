@@ -115,7 +115,7 @@ char    **sort_time(char **arreg, char **arrtime)
 }
 
 
-int ls_ti(char *arg, struct timestuff *ts) 
+int ls_ti(char *arg, struct s_timestuff *ts) 
 {
 	char	**date_num;
 	

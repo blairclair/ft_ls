@@ -24,7 +24,7 @@
 #include <pwd.h>
 #include <stdlib.h>
 
-int     conv_month2(int i, int arr_track, char *newdate, struct timestuff *ts)
+int     conv_month2(int i, int arr_track, char *newdate, struct s_timestuff *ts)
 {
 	int j;
 
@@ -58,7 +58,7 @@ int     conv_month2(int i, int arr_track, char *newdate, struct timestuff *ts)
 	return (arr_track);
 }
 
-int     conv_month(int i, int arr_track,  char *newdate, struct timestuff *ts)
+int     conv_month(int i, int arr_track,  char *newdate, struct s_timestuff *ts)
 {
 	int j;
 
@@ -90,7 +90,7 @@ int     conv_month(int i, int arr_track,  char *newdate, struct timestuff *ts)
 	return (arr_track);
 }
 
-int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts)
+int     conv_day_num(int i, int arr_track, char *newdate, struct s_timestuff *ts)
 {
 	int j;
 	int track;
@@ -122,7 +122,7 @@ int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts)
 	return (arr_track);
 }
 
-int conv_year(int i, int arr_track, char *newdate, struct timestuff *ts)
+int conv_year(int i, int arr_track, char *newdate, struct s_timestuff *ts)
 {
 	int col;
 	int j;
@@ -147,7 +147,7 @@ int conv_year(int i, int arr_track, char *newdate, struct timestuff *ts)
 	return (arr_track);
 }
 
-int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
+int     conv_time_day(int i, int arr_track, char *newdate, struct s_timestuff *ts)
 {
 	int		j;
 
@@ -185,7 +185,7 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 	return (arr_track);
 }
 
-char **conv_full_date(char *arg, struct timestuff *ts)
+char **conv_full_date(char *arg, struct s_timestuff *ts)
 {
 	int     i;
 	char    **newdate;
