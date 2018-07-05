@@ -154,19 +154,19 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 {
 	struct dirent   *test;
 	DIR             *dir1;
-	char            **arreg;
+//char            **arreg;
 	int             i;
 	struct stat statcheck;
 
-	lstuff->realname = malloc(1);
-	arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1);
-	lstuff->perm = malloc(sizeof(lstuff) * (get_num_date(arg)  + 1));
-	lstuff->user = malloc(sizeof(lstuff) * (get_num_date(arg) + 1));
-	lstuff->group = malloc(sizeof(lstuff) * (get_num_date(arg) + 1));
-	lstuff->date = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
-	lstuff->num = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
-	lstuff->bsize = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
-	lstuff->size_padding = malloc(sizeof(lstuff) *(get_num_date(arg) + 1));
+	lstuff->realname = malloc(30);
+	lstuff->name = malloc(sizeof(lstuff->name) * get_num_reg(arg) + 1);
+	lstuff->perm = malloc(sizeof(lstuff) * (get_num_date(arg) * 10 + 1));
+	lstuff->user = malloc(sizeof(lstuff) * (get_num_date(arg) * 8 + 1));
+	lstuff->group = malloc(sizeof(lstuff) * (get_num_date(arg)  * 15+ 1));
+	lstuff->date = malloc(sizeof(lstuff) *(get_num_date(arg) * 8 + 1));
+	lstuff->num = malloc(sizeof(lstuff) *(get_num_date(arg) * 5 + 1));
+	lstuff->bsize = malloc(sizeof(lstuff) *(get_num_date(arg) * 5 + 1));
+	lstuff->size_padding = malloc(sizeof(lstuff) *(get_num_date(arg) * 10+ 1));
 	i = 0;
 	ft_strcpy(lstuff->realname, " ");
 	if ((dir1 = opendir(arg)) == NULL)
@@ -183,8 +183,8 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 			lstuff->realname =ft_strcat(lstuff->realname, "/");
 			lstuff->realname = ft_strcat(lstuff->realname, test->d_name);
 			stat(lstuff->realname, &statcheck);
-			lstuff->perm[i] = malloc(sizeof(lstuff) * 10);
-			arreg[i] = test->d_name;
+			lstuff->perm[i] = malloc(sizeof(lstuff) * 15);
+			lstuff->name[i] = test->d_name;
 			lstuff->perm[i] = get_perm(lstuff->perm[i], statcheck);
 			lstuff->user[i] = get_user(statcheck);
 			lstuff->group[i] = get_group(statcheck);
@@ -196,13 +196,13 @@ char    **get_arr(char *arg, struct line_stuff *lstuff)
 			i++;
 		}
 	}
-	arreg[i] = NULL;
+	lstuff->name[i] = NULL;
 	lstuff->perm[i] = NULL;
 	lstuff->user[i] = NULL;
 	lstuff->group[i] = NULL;
 	lstuff->date[i] = NULL;
 	closedir(dir1);
-	return (arreg);
+	return (lstuff->name);
 }
 
 char    **sort_line(char **arreg, struct line_stuff *lstuff)
@@ -304,7 +304,7 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 				j++;
 				k++;
 			}  
-			free(padding);
+		
 		}
 		else
 			ft_strcpy(padding, " ");
@@ -313,6 +313,6 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 		i++;
 	} 
 	j = i;
-	
+	free(padding);
 	return (0);
 }

@@ -36,12 +36,15 @@ struct s_dirstuff{
 	char	f;
 	char	d;
 	char	g;
+	char	nt;
 };
 
 struct timestuff{
 	char      **regtime;
 	char 		**nantime;
 	char		*realtname;
+	char		**tmpregtimei;
+	char		**tmpnantimei;
 
 };
 

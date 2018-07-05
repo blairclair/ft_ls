@@ -137,6 +137,7 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 
 	j = 0;
 	i = 0;
+	r2dir->arreg = malloc(sizeof(r2dir->arreg) * get_num_reg(arg) + 1);
 	if (!get_files(r2dir, arg))
 		return (0);
 	countdir(arg, r2dir);
@@ -148,7 +149,7 @@ int	ls_r2(char *arg, struct s_dirstuff *r2dir)
 			ft_printf("ls: %s: no such file or directory\n", arg);
 			return (0);
 		}
-		ft_printf("\n%s\n", r2dir->dir_names[i]);
+		ft_printf("\n%s:\n", r2dir->dir_names[i]);
 		clear_arreg(r2dir);
 		get_files(r2dir, r2dir->dir_names[i]);
 		i++;

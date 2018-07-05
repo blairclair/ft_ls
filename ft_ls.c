@@ -65,7 +65,7 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 	int i;
 	char    *path;
 	i = 0;
-	lsdirs->arreg = malloc(sizeof(lsdirs->arreg) * get_num_reg(".") + 1);
+
 	path = parse_args2(arg_list);
 	while (arg_list[i])
 	{
@@ -90,6 +90,8 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 				lsdirs->d = 1;
 			else if (arg_list[i] == 'g')
 				lsdirs->g = 1;
+			else
+				lsdirs->nt = 1;
 		}
 		i++;
 	}
@@ -109,6 +111,8 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 		ls_d(path);
 	else if (lsdirs->g == 1)
 		ls_g(path, lstuff);
+	else if (lsdirs->nt == 1)
+		ft_printf("ls: illegal option -%s\nusage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n", path);
 	else
 		ls_reg(path);
 	free(path);
@@ -116,6 +120,7 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 
 void	define_vars(struct s_dirstuff *lsdirs, struct line_stuff *lstuff, struct timestuff *ts)
 {
+	lsdirs->arreg = malloc(sizeof(lsdirs->arreg) * get_num_reg(".") + 1);
 	ts->nantime = NULL;
 	lsdirs->newdir = NULL;
 	lsdirs->num_dir = 0;
@@ -131,6 +136,7 @@ void	define_vars(struct s_dirstuff *lsdirs, struct line_stuff *lstuff, struct ti
 	lsdirs->f = 0;
 	lsdirs->d = 0;
 	lsdirs->g = 0;
+	lsdirs->nt = 0;
 }
 
 void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stuff *lstuff)

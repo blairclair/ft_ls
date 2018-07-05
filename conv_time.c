@@ -85,8 +85,8 @@ int     conv_month(int i, int arr_track,  char *newdate, struct timestuff *ts)
 		newdate[arr_track] = '7';
 	if (conv_month2(i, arr_track, newdate, ts)!= 0)
 		arr_track = conv_month2(1, arr_track, &*newdate, ts);
-	arr_track++;
-	newdate[arr_track] = '/';
+//	arr_track++;
+//	newdate[arr_track] = '/';
 	return (arr_track);
 }
 
@@ -117,7 +117,8 @@ int     conv_day_num(int i, int arr_track, char *newdate, struct timestuff *ts)
 		arr_track++;
 		j++;
 	}
-	newdate[arr_track] = '/';
+//	newdate[arr_track] = '/';
+	arr_track--;
 	return (arr_track);
 }
 
@@ -142,6 +143,7 @@ int conv_year(int i, int arr_track, char *newdate, struct timestuff *ts)
 		arr_track++;
 		j++;
 	}
+	arr_track--;
 	return (arr_track);
 }
 
@@ -157,14 +159,18 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 	j++;
 	while (ts->regtime[i][j] != ' ')
 	{
-		newdate[arr_track] = ts->regtime[i][j];
-		arr_track++;
-		j++;
+		if (ts->regtime[i][j] == ':')
+			j++;
+		else
+		{
+			newdate[arr_track] = ts->regtime[i][j];
+			arr_track++;
+			j++;
+		}
 	}
 	
 	
 
-	i = 0;
 	j = 0;
 	while (ts->nantime[i][j])
 	{
@@ -174,7 +180,7 @@ int     conv_time_day(int i, int arr_track, char *newdate, struct timestuff *ts)
 	}
 	newdate[arr_track] = '\0';
 	//ft_strcat(newdate, ts->nantime[i]);
-	
+	//printf("%s\n", newdate);
 
 	return (arr_track);
 }

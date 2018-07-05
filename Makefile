@@ -19,6 +19,8 @@ libft/ft_memalloc.c\
 libft/ft_strnew.c\
 libft/ft_strdup.c\
 libft/ft_memmove.c\
+libft/ft_strchr.c\
+libft/ft_strncpy.c\
 libft/printf_functions/ft_putulong.c\
 libft/printf_functions/ft_ltoa_base.c\
 libft/printf_functions/ft_ultoa_base.c\

@@ -54,7 +54,7 @@ int ls_g(char *arg, struct line_stuff *lstuff)
 				j++;
 				k++;
 			}  
-			free(padding);
+			
 		}
 		else
 			ft_strcpy(padding, " ");
@@ -62,6 +62,6 @@ int ls_g(char *arg, struct line_stuff *lstuff)
 		i++;
 	} 
 	j = i;
-	
+	free(padding);
 	return (0);
 }

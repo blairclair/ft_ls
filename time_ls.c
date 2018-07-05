@@ -24,6 +24,7 @@
 #include <pwd.h>
 #include <stdlib.h>
 
+
 int		get_s_num_ls(long long n)
 {
 	int	i;
@@ -71,6 +72,8 @@ int		icomp(int a, int b)
 	else
 		return (0);
 }
+
+
 char    **sort_time(char **arreg, char **arrtime)
 {
 	int     i;
@@ -110,6 +113,7 @@ char    **sort_time(char **arreg, char **arrtime)
 	}
 	return (arreg);
 }
+
 
 int ls_ti(char *arg, struct timestuff *ts) 
 {
@@ -161,7 +165,6 @@ int             i;
 		printf("%s %s\n", date_num[i], arreg[i]);
 		i++;
 	}*/
-
 	sort_time(arreg, date_num);
 	display_ls(arreg);
 	i = 0;
