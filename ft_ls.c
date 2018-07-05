@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 10:02:29 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/07/03 19:53:18 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/07/05 11:49:10 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,10 @@
 #include <time.h>
 #include <sys/xattr.h>
 
-char	*parse_args2(char *arg_list)
+char	*get_path(char *arg_list, int i, int check)
 {
-	int 	i;
-	char    *path;
-	int		check;
-	
-	check = 0;
-	i = 0;
-	while (arg_list[i])
-	{
-		if (arg_list[i] == '-' && (arg_list[i + 1] == 'R' ||
-		 arg_list[i + 1] == 'a' || arg_list[i + 1] == 'r' ||
-		 arg_list[i + 1] == 't' || arg_list[i + 1] == 'l' ||
-		 arg_list[i + 1] == 'f' || arg_list[i + 1] == 'd' ||
-		 arg_list[i + 1] == 'g'))
-			{
-				check = 1;
-				break ;
-			}
-		i++;
-	}
+	char	*path;
+
 	if (ft_strlen(arg_list) > 3 && i != (int)ft_strlen(arg_list))
 	{
 		path = malloc(ft_strlen(arg_list) - i);
@@ -58,9 +41,63 @@ char	*parse_args2(char *arg_list)
 		ft_strcpy(path, ".");
 	}
 	return (path);
+}
+
+char	*parse_args2(char *arg_list)
+{
+	int 	i;
+	char    *path;
+	int		check;
+
+	check = 0;
+	i = 0;
+	while (arg_list[i])
+	{
+		if (arg_list[i] == '-' && (arg_list[i + 1] == 'R' ||
+			arg_list[i + 1] == 'a' || arg_list[i + 1] == 'r' ||
+			arg_list[i + 1] == 't' || arg_list[i + 1] == 'l' ||
+			arg_list[i + 1] == 'f' || arg_list[i + 1] == 'd' ||
+			arg_list[i + 1] == 'g'))
+		{
+			check = 1;
+			break ;
+		}
+		i++;
+	}
+	path = get_path(arg_list, i, check);
+	return (path);
 }  
 
-void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stuff *lstuff)
+void	call_args(struct s_dirstuff *lsdirs, struct line_stuff *lstuff,
+					struct timestuff *ts, char *path)
+{
+	if (lsdirs->r2 == 1)
+		ls_r2(path, lsdirs);
+	else if (lsdirs->a == 1)
+		ls_a(path);
+	else if (lsdirs->r == 1)
+		ls_r(path);
+	else if (lsdirs->t == 1)
+		ls_ti(path, ts);
+	else if (lsdirs->l == 1)
+		ls_l(path, lstuff);
+	else if (lsdirs->f == 1)
+		ls_f(path);
+	else if (lsdirs->d == 1)
+		ls_d(path);
+	else if (lsdirs->g == 1)
+		ls_g(path, lstuff);
+	else if (lsdirs->nt == 1)
+	{
+		ft_printf("ls: illegal option -%s\nusage:ls", path);
+		ft_printf(" [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
+	}
+	else
+		ls_reg(path);
+}
+
+void    parse_args(char *arg_list, struct s_dirstuff *lsdirs,
+					struct timestuff *ts, struct line_stuff *lstuff)
 {
 	int i;
 	char    *path;
@@ -95,30 +132,12 @@ void    parse_args(char *arg_list, struct s_dirstuff *lsdirs, struct timestuff *
 		}
 		i++;
 	}
-	if (lsdirs->r2 == 1)
-		ls_r2(path, lsdirs);
-	else if (lsdirs->a == 1)
-		ls_a(path);
-	else if (lsdirs->r == 1)
-		ls_r(path);
-	else if (lsdirs->t == 1)
-		ls_ti(path, ts);
-	else if (lsdirs->l == 1)
-		ls_l(path, lstuff);
-	else if (lsdirs->f == 1)
-		ls_f(path);
-	else if (lsdirs->d == 1)
-		ls_d(path);
-	else if (lsdirs->g == 1)
-		ls_g(path, lstuff);
-	else if (lsdirs->nt == 1)
-		ft_printf("ls: illegal option -%s\nusage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n", path);
-	else
-		ls_reg(path);
+	call_args(lsdirs, lstuff, ts, path);
 	free(path);
 }
 
-void	define_vars(struct s_dirstuff *lsdirs, struct line_stuff *lstuff, struct timestuff *ts)
+void	define_vars(struct s_dirstuff *lsdirs,
+					struct line_stuff *lstuff, struct timestuff *ts)
 {
 	lsdirs->arreg = malloc(sizeof(lsdirs->arreg) * get_num_reg(".") + 1);
 	ts->nantime = NULL;
@@ -139,13 +158,10 @@ void	define_vars(struct s_dirstuff *lsdirs, struct line_stuff *lstuff, struct ti
 	lsdirs->nt = 0;
 }
 
-void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stuff *lstuff)
+void	free_l(struct line_stuff *lstuff)
 {
-	int	i;
+		int	i;
 
-	i = 0;
-	if (lsdirs->l == 1 || lsdirs->g == 1)
-	{
 		free(lstuff->realname);
 		i = 0;
 		free(lstuff->name);
@@ -167,7 +183,15 @@ void	free_stuff(struct s_dirstuff *lsdirs, struct timestuff *ts, struct line_stu
 		free(lstuff->num);
 		free(lstuff->bsize);
 		free(lstuff->size_padding);
-	}
+}
+
+void	free_stuff(struct s_dirstuff *lsdirs,
+					struct timestuff *ts)
+{
+	int	i;
+
+	i = 0;
+	
 	
 	if (lsdirs->t == 1)	
 	{
@@ -214,7 +238,7 @@ int     main(int argc, char *argv[])
 		}
 		parse_args(arg_list, &lsdirs, &ts, &lstuff);
 	}
-	free_stuff(&lsdirs, &ts, &lstuff);
+	free_stuff(&lsdirs, &ts);
 	free(arg_list);
 	return (0);
 }

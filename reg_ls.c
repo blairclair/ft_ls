@@ -65,7 +65,7 @@ void    display_ls(char **arreg)
 	i = 0;
 	while (arreg[i])
 	{
-		printf("%s\n", arreg[i]);
+		ft_printf("%s\n", arreg[i]);
 		i++;
 	}
 }
@@ -109,7 +109,7 @@ int get_num_reg(char *arg)
 	{
         if (test->d_name[0] != '.')
 		{
-			i += strlen(test->d_name);
+			i += ft_strlen(test->d_name);
         }
 	}
 	closedir(dir1);

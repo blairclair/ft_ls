@@ -133,23 +133,22 @@ int             i;
     ts->nantime = (char**)malloc(sizeof(ts->nantime) * get_num_date(arg) * 10 + 1);
     if ((dir1 = opendir(arg)) == NULL)
 	{
-       	printf("ls: %s: no such file or directory\n", arg);
+       	ft_printf("ls: %s: no such file or directory\n", arg);
         return (0);
     }
   
-    strcpy(ts->realtname, " ");
+    ft_strcpy(ts->realtname, " ");
     while ((test = readdir(dir1)) != NULL)
 	{
         if (test->d_name[0] != '.')
 		{
-			bzero(ts->realtname, strlen(ts->realtname));
+			ft_bzero(ts->realtname, ft_strlen(ts->realtname));
             ts->realtname = ft_strjoin(ts->realtname, arg);
 			ts->realtname = ft_strjoin(ts->realtname, "/");//keep an eye
 			ts->realtname = ft_strjoin(ts->realtname, test->d_name);
-          //  printf("tname: %s\n", ts->realtname);
             arreg[i] = test->d_name;
             stat(ts->realtname, &statcheck);
-            ts->regtime[i] = strdup(ctime(&statcheck.st_mtime));
+            ts->regtime[i] = ft_strdup(ctime(&statcheck.st_mtime));
 			ntime = statcheck.st_mtimespec.tv_nsec;
             ts->nantime[i] = ft_ltoa_ls(ntime);
             i++;
@@ -160,11 +159,6 @@ int             i;
     ts->regtime[i] = NULL;
     i = 0;
 	date_num = conv_full_date(arg, ts);
-	/*while (date_num[i])
-	{
-		printf("%s %s\n", date_num[i], arreg[i]);
-		i++;
-	}*/
 	sort_time(arreg, date_num);
 	display_ls(arreg);
 	i = 0;

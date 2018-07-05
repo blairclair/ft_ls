@@ -201,7 +201,6 @@ char **conv_full_date(char *arg, struct timestuff *ts)
 		arr_track = conv_day_num(i, arr_track, &*newdate[i], ts);
 		arr_track = conv_year(i, arr_track, &*newdate[i], ts);
 		arr_track = conv_time_day(i, arr_track, &*newdate[i], ts);
-	//	printf("%zu\n", ft_strlen(newdate[i]));
 		arr_track = 0;
 		i++;
 	}

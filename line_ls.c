@@ -314,5 +314,6 @@ int ls_l(char *arg, struct line_stuff *lstuff)
 	} 
 	j = i;
 	free(padding);
+	free_l(lstuff);
 	return (0);
 }

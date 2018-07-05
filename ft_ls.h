@@ -103,5 +103,6 @@ char    **sort_line(char **arreg, struct line_stuff *lstuff);
 int		sort_size(int *bsize);
 int		ls_g(char *arg, struct line_stuff *lstuff);
 char	*ft_ltoa_ls(long long n);
+void	free_l(struct line_stuff *lstuff);
 
 #endif
