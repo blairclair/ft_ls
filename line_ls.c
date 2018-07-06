@@ -148,6 +148,14 @@ char	*get_date(char *date, struct stat statcheck)
 	return (date2);
 }
 
+void	get_num_blocks(struct s_line_stuff *lstuff, struct stat statcheck)
+{
+	int	nb;
+
+	nb = statcheck.st_blocks;
+	lstuff->numblocks += nb;
+}
+
 void	define_lstuff(struct s_line_stuff *lstuff, char *arg)
 {
 	lstuff->realname = malloc(30);
@@ -182,6 +190,7 @@ int		get_line_arr(struct s_line_stuff *lstuff, struct dirent *test,
 		lstuff->num[i] = get_num(statcheck);
 		lstuff->bsize[i] = get_file_size(statcheck);
 		lstuff->size_padding[i] = get_num_len(lstuff->bsize[i]);
+		get_num_blocks(lstuff, statcheck);
 		i++;
 	}
 	return (i);
@@ -311,6 +320,7 @@ int		ls_l(char *arg, struct s_line_stuff *lstuff)
 		return (0);
 	sort_line(lstuff->name, lstuff);
 	padnum = sort_size(lstuff->size_padding);
+	ft_printf("total %d\n", lstuff->numblocks);
 	while (lstuff->name[i])
 	{
 		padding = get_padding(*&padding, padnum, i, lstuff);

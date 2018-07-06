@@ -79,12 +79,13 @@ void	get_format_d(struct s_format *let, struct s_print *flags, va_list vl)
 	if ((let->d == 1 && (flags->l_2 == 1 || flags->l_1 == 1))
 			|| (let->i == 1 && (flags->l_2 == 1 || flags->l_1 == 1)))
 		get_l_d(let, flags, vl);
-	else if ((let->d == 1 && flags->h_2 == 1) || (let->i == 1 && flags->h_2 == 1))
+	else if ((let->d == 1 && flags->h_2 == 1) ||
+			(let->i == 1 && flags->h_2 == 1))
 		get_h_d(let, flags, vl);
 	else if ((let->d == 1 && flags->z == 1) || (let->i == 1 && flags->z == 1))
 		get_z_d(let, flags, vl);
 	else if ((let->d == 1 && flags->j == 1) || (let->i == 1 && flags->j == 1))
 		get_j_d(let, flags, vl);
 	else if (let->d == 1 || let->i == 1)
-		get_last_d(let, flags, vl);	
+		get_last_d(let, flags, vl);
 }

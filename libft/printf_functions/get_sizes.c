@@ -18,6 +18,7 @@
 void	get_last_d(struct s_format *let, struct s_print *flags, va_list vl)
 {
 	intmax_t		inum;
+
 	inum = (int)va_arg(vl, intmax_t);
 	print_flags(let, flags, inum, NULL);
 	if (flags->zero == 1 && inum < 0)

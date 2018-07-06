@@ -51,6 +51,5 @@ char	*ft_itoa(int n)
 	if (neg == -1)
 		str[size--] = '-';
 	str2 = str;
-	//free(str);
 	return (str2);
 }

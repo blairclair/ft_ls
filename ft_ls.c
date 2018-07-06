@@ -151,6 +151,7 @@ void	define_vars(struct s_dirstuff *lsdirs,
 	lsdirs->arrnum = 0;
 	lsdirs->dir_names = malloc(200);
 	lstuff->name = NULL;
+	lstuff->numblocks = 0;
 	lsdirs->a = 0;
 	lsdirs->l = 0;
 	lsdirs->r = 0;
@@ -161,33 +162,6 @@ void	define_vars(struct s_dirstuff *lsdirs,
 	lsdirs->d = 0;
 	lsdirs->g = 0;
 	lsdirs->nt = 0;
-}
-
-void	free_l(struct s_line_stuff *lstuff)
-{
-	int	i;
-
-	free(lstuff->realname);
-	i = 0;
-	free(lstuff->name);
-	while (lstuff->perm[i])
-	{
-		free(lstuff->perm[i]);
-		i++;
-	}
-	free(lstuff->perm);
-	i = 0;
-	while (lstuff->date[i])
-	{
-		free(lstuff->date[i]);
-		i++;
-	}
-	free(lstuff->user);
-	free(lstuff->group);
-	free(lstuff->date);
-	free(lstuff->num);
-	free(lstuff->bsize);
-	free(lstuff->size_padding);
 }
 
 void	free_stuff(struct s_dirstuff *lsdirs,

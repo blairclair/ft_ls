@@ -48,6 +48,7 @@ time_ls.c\
 conv_time.c\
 line_ls.c\
 g_ls.c\
+be_free.c\
 ft_ls.c
 
 NAME=ft_ls

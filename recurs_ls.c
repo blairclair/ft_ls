@@ -19,49 +19,30 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-char	*ft_strjoin3(char *s1, char *s2)
+void	get_dir_name(struct s_dirstuff *r2dir, struct dirent *test, char *arg)
 {
-	char	*s3;
-	int		i;
-	
-	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	else
-	{
-		s3 = (char*)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-		if (s3 == NULL)
-			return (NULL);
-		ft_strcpy(s3, s1);
-		ft_strcat(s3, s2);
-		while (s3[i])
-			i++;
-		s3[i] = '\0';
-	}
-	free(s1);
-	return (s3);
+	ft_bzero(r2dir->newdir, ft_strlen(r2dir->newdir));
+	r2dir->newdir = ft_strcat(r2dir->newdir, arg);
+	r2dir->newdir = ft_strcat(r2dir->newdir, "/");
+	r2dir->newdir = ft_strcat(r2dir->newdir, test->d_name);
 }
-
 
 int		countdir(char *arg, struct s_dirstuff *r2dir)
 {
-	struct dirent   *test;
-	DIR             *dir1;
-	struct stat     statcheck;
+	struct dirent	*test;
+	DIR				*dir1;
+	struct stat		statcheck;
+
 	r2dir->newdir = malloc(200);
 	if ((dir1 = opendir(arg)) == NULL)
-	    return (r2dir->num_dir);
+		return (r2dir->num_dir);
 	while ((test = readdir(dir1)) != NULL)
 	{
 		if (test->d_name[0] != '.')
 		{
-			
-			ft_bzero(r2dir->newdir, ft_strlen(r2dir->newdir));
-			r2dir->newdir = ft_strcat(r2dir->newdir, arg);
-			r2dir->newdir = ft_strcat(r2dir->newdir, "/");
-			r2dir->newdir = ft_strcat(r2dir->newdir, test->d_name);
+			get_dir_name(r2dir, test, arg);
 			stat(r2dir->newdir, &statcheck);
-			if (S_ISDIR(statcheck.st_mode))//checks if isdirectory
+			if (S_ISDIR(statcheck.st_mode))
 			{
 				r2dir->dir_names[r2dir->arrnum] = r2dir->newdir;
 				r2dir->arrnum++;
@@ -77,8 +58,8 @@ int		countdir(char *arg, struct s_dirstuff *r2dir)
 
 int		get_files(struct s_dirstuff *r2dir, char *arg)
 {
-	struct dirent   *test;
-	DIR             *dir1;
+	struct dirent	*test;
+	DIR				*dir1;
 	int				i;
 
 	i = 0;
@@ -102,7 +83,6 @@ int		get_files(struct s_dirstuff *r2dir, char *arg)
 	return (i);
 }
 
-
 void	clear_arreg(struct s_dirstuff *r2dir)
 {
 	int	i;
@@ -115,31 +95,16 @@ void	clear_arreg(struct s_dirstuff *r2dir)
 	}
 }
 
-void	free_r2(struct s_dirstuff *r2dir)
+int		ls_r2(char *arg, struct s_dirstuff *r2dir)
 {
-	int	j;
-
-	j = 0;
-	free(r2dir->newdir);
-	while (r2dir->dir_names[j])
-	{
-		free(r2dir->dir_names[j]);
-		j++;
-	}
-	j = 0;
-
-}
-int	ls_r2(char *arg, struct s_dirstuff *r2dir)
-{
-	DIR             *dir1;
+	DIR				*dir1;
 	int				i;
 	int				j;
 
 	j = 0;
 	i = 0;
 	r2dir->arreg = malloc(sizeof(r2dir->arreg) * get_num_reg(arg) + 1);
-	if (!get_files(r2dir, arg))
-		return (0);
+	get_files(r2dir, arg);
 	countdir(arg, r2dir);
 	sort_reg(r2dir->dir_names);
 	while (r2dir->dir_names[i])

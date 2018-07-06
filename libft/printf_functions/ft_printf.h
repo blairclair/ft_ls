@@ -14,7 +14,7 @@
 # define FT_PRINTF_H
 # include <stdarg.h>
 # include "libft/libft.h"
-#include <stdio.h>
+# include <stdio.h>
 
 struct	s_print{
 	int cap;

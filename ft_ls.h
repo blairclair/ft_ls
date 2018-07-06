@@ -47,6 +47,7 @@ struct	s_timestuff
 	char		*realtname;
 	char		**tmpregtimei;
 	char		**tmpnantimei;
+	time_t		ntime;
 };
 
 struct	s_line_stuff
@@ -59,6 +60,7 @@ struct	s_line_stuff
 	char		**date;
 	int			*num;
 	int			*size_padding;
+	int			numblocks;
 	char		*realname;
 };
 
@@ -113,5 +115,6 @@ void	free_l(struct s_line_stuff *lstuff);
 int		get_reg_arr(char **arreg, struct dirent *test, int i);
 char	*get_padding(char *padding, int padnum,
 					int i, struct s_line_stuff *lstuff);
+void	free_r2(struct s_dirstuff *r2dir);
 
 #endif

@@ -47,22 +47,6 @@ char	*get_padding(char *padding, int padnum,
 	return (padding);
 }
 
-int		get_total_size(struct s_line_stuff *lstuff)
-{
-	int	size;
-	int	i;
-
-	i = 0;
-	size = 0;
-	while (lstuff->bsize[i])
-	{
-		size += lstuff->bsize[i];
-		//	printf("num: %d\n", lstuff->num[i]);
-		i++;
-	}
-	return (size);
-}
-
 int		ls_g(char *arg, struct s_line_stuff *lstuff)
 {
 	int		i;
@@ -75,8 +59,8 @@ int		ls_g(char *arg, struct s_line_stuff *lstuff)
 	if ((lstuff->name = get_arr(arg, lstuff)) == 0)
 		return (0);
 	sort_line(lstuff->name, lstuff);
-//	ft_printf("total %d\n", get_total_size(lstuff));
 	padnum = sort_size(lstuff->size_padding);
+	ft_printf("total %d\n", lstuff->numblocks);
 	while (lstuff->name[i])
 	{
 		padding = get_padding(*&padding, padnum, i, lstuff);
