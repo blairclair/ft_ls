@@ -116,5 +116,21 @@ int		get_reg_arr(char **arreg, struct dirent *test, int i);
 char	*get_padding(char *padding, int padnum,
 					int i, struct s_line_stuff *lstuff);
 void	free_r2(struct s_dirstuff *r2dir);
+void	free_stuff(struct s_dirstuff *lsdirs);
+char	*get_path(char *arg_list, int i, int check);
+char	*parse_args2(char *arg_list);
+void	call_args(struct s_dirstuff *lsdirs, struct s_line_stuff *lstuff,
+					struct s_timestuff *ts, char *path);
+void	check_flags(char *arg_list, int i, struct s_dirstuff *lsdirs);
+void	parse_args(char *arg_list, struct s_dirstuff *lsdirs,
+					struct s_timestuff *ts, struct s_line_stuff *lstuff);
+char	**sort_back(char **arreg);
+void	free_date(char **date_num, char **arreg, struct s_timestuff *ts);
+char	**sort_time(char **arreg, char **arrtime);
+int		conv_year(int i, int arr_track, char *newdate, struct s_timestuff *ts);
+int		conv_day_num(int i, int arr_track, char *newdate,
+					struct s_timestuff *ts);
+int		conv_month(int i, int arr_track, char *newdate, struct s_timestuff *ts);
+int		loopthroughj(struct s_timestuff *ts, int i);
 
 #endif

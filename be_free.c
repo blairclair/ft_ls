@@ -59,3 +59,31 @@ void	free_r2(struct s_dirstuff *r2dir)
 	}
 	j = 0;
 }
+
+void	free_stuff(struct s_dirstuff *lsdirs)
+{
+	free(lsdirs->dir_names);
+	free(lsdirs->arreg);
+}
+
+void	free_date(char **date_num, char **arreg, struct s_timestuff *ts)
+{
+	int	i;
+
+	i = 0;
+	while (date_num[i])
+	{
+		free(date_num[i]);
+		i++;
+	}
+	free(date_num);
+	free(arreg);
+	i = 0;
+	while (ts->regtime[i])
+	{
+		free(ts->regtime[i]);
+		i++;
+	}
+	free(ts->regtime);
+	free(ts->nantime);
+}

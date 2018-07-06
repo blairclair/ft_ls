@@ -49,6 +49,13 @@ conv_time.c\
 line_ls.c\
 g_ls.c\
 be_free.c\
+ls_args.c\
+get_file_nums.c\
+sort_stuff.c\
+conv_date.c\
+sort_line.c\
+get_permissions.c\
+extra_line_info.c\
 ft_ls.c
 
 NAME=ft_ls

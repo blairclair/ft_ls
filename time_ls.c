@@ -62,53 +62,6 @@ char	*ft_ltoa_ls(long long n)
 	return (str);
 }
 
-int		sort_time1(char **arrtime, char **arreg, char *x2, int j)
-{
-	while (j >= 0 && ft_strcmp_ls(arrtime[j], x2) == arrtime[j])
-	{
-		arrtime[j + 1] = arrtime[j];
-		arreg[j + 1] = arreg[j];
-		j--;
-	}
-	return (j);
-}
-
-int		sort_time2(char **arrtime, char **arreg, char *x, int j)
-{
-	while (j >= 0 && ft_strcmp_ls(arreg[j], x) == arreg[j])
-	{
-		arreg[j + 1] = arreg[j];
-		arrtime[j + 1] = arrtime[j];
-		j--;
-	}
-	return (j);
-}
-
-char	**sort_time(char **arreg, char **arrtime)
-{
-	int		i;
-	int		j;
-	char	*x;
-	char	*x2;
-
-	j = 0;
-	i = 1;
-	while (arrtime[i])
-	{
-		x2 = arrtime[i];
-		x = arreg[i];
-		j = i - 1;
-		if (ft_strcmp_ls(arrtime[j], x2))
-			j = sort_time1(arrtime, arreg, x2, j);
-		else
-			sort_time2(arrtime, arreg, x, j);
-		arrtime[j + 1] = x2;
-		arreg[j + 1] = x;
-		i++;
-	}
-	return (arreg);
-}
-
 int		define_time(char **arreg, char *arg, struct s_timestuff *ts, DIR *dir1)
 {
 	int				i;
@@ -135,20 +88,6 @@ int		define_time(char **arreg, char *arg, struct s_timestuff *ts, DIR *dir1)
 	return (i);
 }
 
-void	free_date(char **date_num, char **arreg)
-{
-	int	i;
-
-	i = 0;
-	while (date_num[i])
-	{
-		free(date_num[i]);
-		i++;
-	}
-	free(date_num);
-	free(arreg);
-}
-
 int		ls_ti(char *arg, struct s_timestuff *ts)
 {
 	char			**date_num;
@@ -173,7 +112,7 @@ int		ls_ti(char *arg, struct s_timestuff *ts)
 	date_num = conv_full_date(arg, ts);
 	sort_time(arreg, date_num);
 	display_ls(arreg);
-	free_date(date_num, arreg);
+	free_date(date_num, arreg, ts);
 	closedir(dir1);
 	return (0);
 }

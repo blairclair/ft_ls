@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "ft_ls.h"
 
 char	*ft_strcmp_ls(char *ss1, char *ss2)
 {
@@ -53,71 +54,6 @@ void	display_ls(char **arreg)
 		ft_printf("%s\n", arreg[i]);
 		i++;
 	}
-}
-
-char	**sort_reg(char **arreg)
-{
-	int		i;
-	int		j;
-	char	*x;
-
-	j = 0;
-	i = 1;
-	while (arreg[i])
-	{
-		x = arreg[i];
-		j = i - 1;
-		while (j >= 0 && ft_strcmp_ls(arreg[j], x) == x)
-		{
-			arreg[j + 1] = arreg[j];
-			j--;
-		}
-		arreg[j + 1] = x;
-		i++;
-	}
-	return (arreg);
-}
-
-int		get_num_reg(char *arg)
-{
-	struct dirent	*test;
-	DIR				*dir1;
-	int				i;
-
-	i = 0;
-	if ((dir1 = opendir(arg)) == NULL)
-	{
-		return (0);
-	}
-	while ((test = readdir(dir1)) != NULL)
-	{
-		if (test->d_name[0] != '.')
-		{
-			i += ft_strlen(test->d_name);
-		}
-	}
-	closedir(dir1);
-	return (i);
-}
-
-int		get_num_date(char *arg)
-{
-	struct dirent	*test;
-	DIR				*dir1;
-	int				i;
-
-	i = 0;
-	if ((dir1 = opendir(arg)) == NULL)
-	{
-		return (0);
-	}
-	while ((test = readdir(dir1)) != NULL)
-	{
-		if (test->d_name[0] != '.')
-			i++;
-	}
-	closedir(dir1);
-	return (i);
 }
 
 int		get_reg_arr(char **arreg, struct dirent *test, int i)

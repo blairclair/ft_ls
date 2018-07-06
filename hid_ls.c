@@ -19,29 +19,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-char	**sort_back(char **arreg)
-{
-	int		i;
-	int		j;
-	char	*x;
-
-	j = 0;
-	i = 1;
-	while (arreg[i])
-	{
-		x = arreg[i];
-		j = i - 1;
-		while (j >= 0 && ft_strcmp_ls(arreg[j], x) == arreg[j])
-		{
-			arreg[j + 1] = arreg[j];
-			j--;
-		}
-		arreg[j + 1] = x;
-		i++;
-	}
-	return (arreg);
-}
-
 int		ls_r(char *arg)
 {
 	struct dirent	*test;
