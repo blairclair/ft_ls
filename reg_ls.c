@@ -19,6 +19,17 @@
 #include <unistd.h>
 #include "ft_ls.h"
 
+void	no_perm(char *arg)
+{
+	struct stat statcheck;
+
+	stat(arg, &statcheck);
+	if (!(statcheck.st_mode & S_IRUSR) && S_ISDIR(statcheck.st_mode))
+		ft_printf("ls: %s: Permission denied\n", arg);
+		else
+			ft_printf("ls: %s: no such file or directory\n", arg);
+}
+
 char	*ft_strcmp_ls(char *ss1, char *ss2)
 {
 	char	*temp_s1;
@@ -72,13 +83,13 @@ int		ls_reg(char *arg)
 	DIR				*dir1;
 	char			**arreg;
 	int				i;
-
+	
 	if ((arreg = malloc(sizeof(arreg) * get_num_reg(arg) + 1)) == NULL)
 		return (0);
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		free(arreg);
 		return (0);
 	}

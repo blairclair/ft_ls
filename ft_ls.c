@@ -53,9 +53,9 @@ int		main(int argc, char *argv[])
 	struct s_line_stuff	lstuff;
 
 	arg_list = "";
-	i = 3;
+	i = 2;
 	define_vars(&lsdirs, &lstuff, &ts);
-	arg_list = ft_strjoin(arg_list, argv[1]);
+	arg_list = malloc(200);
 	if (argc == 1 || !ft_strcmp(arg_list, "-1"))
 		ls_reg(".");
 	else
@@ -63,6 +63,7 @@ int		main(int argc, char *argv[])
 		while (i < argc + 1)
 		{
 			ft_strcat(arg_list, argv[i - 1]);
+			ft_strcat(arg_list, " ");
 			i++;
 		}
 		parse_args(arg_list, &lsdirs, &ts, &lstuff);

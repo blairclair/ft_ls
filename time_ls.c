@@ -101,7 +101,7 @@ int		ls_ti(char *arg, struct s_timestuff *ts)
 	ts->nantime = malloc(sizeof(ts->nantime) * get_num_date(arg) * 10 + 1);
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		return (0);
 	}
 	ft_strcpy(ts->realtname, " ");

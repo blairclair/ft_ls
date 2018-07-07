@@ -83,7 +83,7 @@ char	**get_arr(char *arg, struct s_line_stuff *lstuff)
 	ft_strcpy(lstuff->realname, " ");
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		return (0);
 	}
 	while ((test = readdir(dir1)) != NULL)

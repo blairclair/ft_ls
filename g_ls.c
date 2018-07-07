@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 13:48:17 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/07/05 13:22:45 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/07/06 09:54:47 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ char	*get_padding(char *padding, int padnum,
 		}
 	}
 	else
+	{
+		padding = malloc(2);
 		ft_strcpy(padding, " ");
+	}
 	return (padding);
 }
 

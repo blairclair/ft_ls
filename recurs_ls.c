@@ -6,7 +6,7 @@
 /*   By: agrodzin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/09 09:03:24 by agrodzin          #+#    #+#             */
-/*   Updated: 2018/06/26 14:08:48 by agrodzin         ###   ########.fr       */
+/*   Updated: 2018/07/06 09:35:55 by agrodzin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		get_files(struct s_dirstuff *r2dir, char *arg)
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		return (0);
 	}
 	while ((test = readdir(dir1)) != NULL)
@@ -99,19 +99,18 @@ int		ls_r2(char *arg, struct s_dirstuff *r2dir)
 {
 	DIR				*dir1;
 	int				i;
-	int				j;
 
-	j = 0;
 	i = 0;
 	r2dir->arreg = malloc(sizeof(r2dir->arreg) * get_num_reg(arg) + 1);
-	get_files(r2dir, arg);
+	if (!get_files(r2dir, arg))
+		return (0);
 	countdir(arg, r2dir);
 	sort_reg(r2dir->dir_names);
 	while (r2dir->dir_names[i])
 	{
 		if ((dir1 = opendir(r2dir->dir_names[i])) == NULL)
 		{
-			ft_printf("ls: %s: no such file or directory\n", arg);
+			no_perm(arg);
 			return (0);
 		}
 		ft_printf("\n%s:\n", r2dir->dir_names[i]);

@@ -31,7 +31,7 @@ int		ls_r(char *arg)
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		return (0);
 	}
 	while ((test = readdir(dir1)) != NULL)
@@ -56,7 +56,7 @@ int		ls_a(char *arg)
 	i = 0;
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		return (0);
 	}
 	while ((test = readdir(dir1)) != NULL)
@@ -78,7 +78,7 @@ int		ls_d(char *arg)
 
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		return (0);
 	}
 	else
@@ -110,7 +110,7 @@ int		ls_f(char *arg)
 	i = 2;
 	if ((dir1 = opendir(arg)) == NULL)
 	{
-		ft_printf("ls: %s: no such file or directory\n", arg);
+		no_perm(arg);
 		free(arreg);
 		return (0);
 	}

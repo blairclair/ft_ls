@@ -21,36 +21,13 @@
 #include <time.h>
 #include <sys/xattr.h>
 
-char	*get_path(char *arg_list, int i, int check)
+int		check_minus(char *arg_list)
 {
-	char	*path;
+	int	i;
+	int	check;
 
-	if (ft_strlen(arg_list) > 3 && i != (int)ft_strlen(arg_list))
-	{
-		path = malloc(ft_strlen(arg_list) - i);
-		ft_memmove(path, arg_list + (i + 2), ft_strlen(arg_list) - (i + 2));
-	}
-	else if (check == 0)
-	{
-		path = malloc(ft_strlen(arg_list) + 1);
-		ft_strcpy(path, arg_list);
-	}
-	else
-	{
-		path = malloc(2);
-		ft_strcpy(path, ".");
-	}
-	return (path);
-}
-
-char	*parse_args2(char *arg_list)
-{
-	int		i;
-	char	*path;
-	int		check;
-
-	check = 0;
 	i = 0;
+	check = 0;
 	while (arg_list[i])
 	{
 		if (arg_list[i] == '-' && (arg_list[i + 1] == 'R' ||
@@ -64,36 +41,72 @@ char	*parse_args2(char *arg_list)
 		}
 		i++;
 	}
-	path = get_path(arg_list, i, check);
+	return (check);
+}
+
+char	**get_path(char *arg_list)
+{
+	int		j;
+	char	**path;
+	int		k;
+	char	*al;
+	int		check;
+
+	check = check_minus(arg_list);
+	path = malloc(200);
+	j = 0;
+	k = 0;
+	if (ft_strlen(arg_list) == 0 || (ft_strlen(arg_list) > 0 &&
+	 ft_strlen(arg_list) <= 3 && check == 1))
+	{
+		path[j] = malloc(2);
+		ft_strcpy(path[j], ".");
+	}
+	else
+	{
+		al = ft_memalloc(200);
+		if (check == 1)
+			al = ft_memmove(al, arg_list + 2, ft_strlen(arg_list) - 2);
+		else
+			al = ft_memmove(al, arg_list, ft_strlen(arg_list));
+		path = ft_strsplit(al, ' ');	
+	}
 	return (path);
 }
 
 void	call_args(struct s_dirstuff *lsdirs, struct s_line_stuff *lstuff,
-					struct s_timestuff *ts, char *path)
+					struct s_timestuff *ts, char **path)
 {
-	if (lsdirs->r2 == 1)
-		ls_r2(path, lsdirs);
-	else if (lsdirs->a == 1)
-		ls_a(path);
-	else if (lsdirs->r == 1)
-		ls_r(path);
-	else if (lsdirs->t == 1)
-		ls_ti(path, ts);
-	else if (lsdirs->l == 1)
-		ls_l(path, lstuff);
-	else if (lsdirs->f == 1)
-		ls_f(path);
-	else if (lsdirs->d == 1)
-		ls_d(path);
-	else if (lsdirs->g == 1)
-		ls_g(path, lstuff);
-	else if (lsdirs->nt == 1)
+	int i;
+
+	i = 0;
+	while (path[i])
 	{
-		ft_printf("ls: illegal option -%s\nusage:ls", path);
-		ft_printf(" [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
+		if (lsdirs->r2 == 1)
+			ls_r2(path[i], lsdirs);
+		else if (lsdirs->a == 1)
+			ls_a(path[i]);
+		else if (lsdirs->r == 1)
+			ls_r(path[i]);
+		else if (lsdirs->t == 1)
+			ls_ti(path[i], ts);
+		else if (lsdirs->l == 1)
+			ls_l(path[i], lstuff);
+		else if (lsdirs->f == 1)
+			ls_f(path[i]);
+		else if (lsdirs->d == 1)
+			ls_d(path[i]);
+		else if (lsdirs->g == 1)
+			ls_g(path[i], lstuff);
+		else if (lsdirs->nt == 1)
+		{
+			ft_printf("ls: illegal option -%s\nusage:ls", path[i]);
+			ft_printf(" [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
+		}
+		else
+			ls_reg(path[i]);
+		i++;
 	}
-	else
-		ls_reg(path);
 }
 
 void	check_flags(char *arg_list, int i, struct s_dirstuff *lsdirs)
@@ -122,10 +135,10 @@ void	parse_args(char *arg_list, struct s_dirstuff *lsdirs,
 					struct s_timestuff *ts, struct s_line_stuff *lstuff)
 {
 	int		i;
-	char	*path;
+	char	**path;
 
 	i = 0;
-	path = parse_args2(arg_list);
+	path = get_path(arg_list);
 	while (arg_list[i])
 	{
 		if (arg_list[i] == '-')
