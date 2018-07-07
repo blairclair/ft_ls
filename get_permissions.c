@@ -77,6 +77,16 @@ char	*get_perm(char *perm, struct stat statcheck)
 {
 	if (S_ISDIR(statcheck.st_mode))
 		perm[0] = 'd';
+	else if (S_ISBLK(statcheck.st_mode))
+		perm[0] = 'b';
+	else if (S_ISCHR(statcheck.st_mode))
+		perm[0] = 'c';
+	else if (S_ISLNK(statcheck.st_mode))
+		perm[0] = 'l';
+	else if (S_ISSOCK(statcheck.st_mode))
+		perm[0] = 's';
+	else if (S_ISFIFO(statcheck.st_mode))
+		perm[0] = 'p';
 	else
 		perm[0] = '-';
 	user_perm(&*perm, statcheck);
