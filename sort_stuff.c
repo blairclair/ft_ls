@@ -19,6 +19,30 @@
 #include <unistd.h>
 #include "ft_ls.h"
 
+long	ft_atol(const char *str)
+{
+	int		i;
+	long	num;
+	int		check;
+
+	i = 0;
+	num = 0;
+	check = 1;
+	while (str[i] == '\n' || str[i] == '\t' || str[i] == '\r' ||
+		str[i] == '\v' || str[i] == '\f' || str[i] == ' ')
+		i++;
+	if (str[i] == '-')
+		check = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		num = num * 10 + str[i] - '0';
+		i++;
+	}
+	return (num * check);
+}
+
 char	**sort_back(char **arreg)
 {
 	int		i;
@@ -92,57 +116,7 @@ int		sort_time2(char **arrtime, char **arreg, int j, struct s_timestuff *ts)
 	}
 	return (j);
 }
-/*
-char	**sort_time(char **arreg, char **arrtime, struct s_timestuff *ts)
-{
-	int		i;
-	int		j;
-	char	*x;
-	char	*x2;
-	char	*x3;
 
-	j = 0;
-	i = 1;
-	while (arrtime[i])
-	{
-		x2 = arrtime[i];
-		x = arreg[i];
-		x3 = ts->nantime[i];
-		j = i - 1;
-		if (atol(arrtime[j]) != atol(x2))
-		{
-			while (j >= 0 && atol(arrtime[j]) > atol(x2))
-			{
-				arrtime[j + 1] = arrtime[j];
-				arreg[j + 1] = arreg[j];
-				ts->nantime[j + 1] = ts->nantime[j];
-				j--;
-			}
-		}
-		else
-		{
-			while (j >= 0 && atol(ts->nantime[j]) > atol(x3))
-			{
-				arrtime[j + 1] = arrtime[j];
-				arreg[j + 1] = arreg[j];
-				ts->nantime[j + 1] = ts->nantime[j];
-				j--;
-			}
-		}
-		arrtime[j + 1] = x2;
-		arreg[j + 1] = x;
-		ts->nantime[j + 1] = x3;
-		i++;
-	}
-
-	i = 0;
-	while (arreg[i])
-	{
-		ft_printf("%s %s %d\n",arreg[i], arrtime[i], ft_atoi(ts->nantime[i]));
-		i++;
-	}
-	return (arreg);
-}*/
 void    swap_char(char **x, char **y)
 {
     char *tmp;
@@ -167,15 +141,15 @@ char	**sort_time(char **arreg, char **arrtime, struct s_timestuff *ts)
 		j = 0;
 		while (j < n - i - 1)
 		{
-			if (atol(arrtime[j]) < atol(arrtime[j + 1]))
+			if (ft_atol(arrtime[j]) < ft_atol(arrtime[j + 1]))
 			{
 				swap_char(&arreg[j], &arreg[j + 1]);
 				swap_char(&arrtime[j], &arrtime[j + 1]);
 				swap_char(&ts->nantime[j], &ts->nantime[j + 1]);
 			}
-			else if (atol(arrtime[j]) == atol(arrtime[j + 1]))
+			else if (ft_atol(arrtime[j]) == ft_atol(arrtime[j + 1]))
 			{
-				if (atol(ts->nantime[j]) < atol(ts->nantime[j + 1]))
+				if (ft_atol(ts->nantime[j]) < ft_atol(ts->nantime[j + 1]))
 				{
 					swap_char(&arreg[j], &arreg[j + 1]);
 					swap_char(&arrtime[j], &arrtime[j + 1]);

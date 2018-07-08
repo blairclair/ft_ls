@@ -97,6 +97,5 @@ char	**conv_full_date(char *arg, struct s_timestuff *ts)
 		i++;
 	}
 	newdate[i] = NULL;
-//	display_ls(newdate);
 	return (newdate);
 }
