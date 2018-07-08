@@ -70,12 +70,12 @@ void	free_date(char **date_num, char **arreg, struct s_timestuff *ts)
 {
 	int	i;
 
-	i = 0;
+	i = 0;/*
 	while (date_num[i])
 	{
 		free(date_num[i]);
 		i++;
-	}
+	}*/
 	free(date_num);
 	free(arreg);
 	i = 0;

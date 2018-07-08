@@ -110,7 +110,7 @@ int		ls_ti(char *arg, struct s_timestuff *ts)
 	ts->nantime[i] = NULL;
 	ts->regtime[i] = NULL;
 	date_num = conv_full_date(arg, ts);
-	sort_time(arreg, date_num);
+	sort_time(arreg, date_num, ts);
 	display_ls(arreg);
 	free_date(date_num, arreg, ts);
 	closedir(dir1);

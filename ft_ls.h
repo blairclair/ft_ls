@@ -125,7 +125,7 @@ void	parse_args(char *arg_list, struct s_dirstuff *lsdirs,
 					struct s_timestuff *ts, struct s_line_stuff *lstuff);
 char	**sort_back(char **arreg);
 void	free_date(char **date_num, char **arreg, struct s_timestuff *ts);
-char	**sort_time(char **arreg, char **arrtime);
+char	**sort_time(char **arreg, char **arrtime, struct s_timestuff *ts);
 int		conv_year(int i, int arr_track, char *newdate, struct s_timestuff *ts);
 int		conv_day_num(int i, int arr_track, char *newdate,
 					struct s_timestuff *ts);

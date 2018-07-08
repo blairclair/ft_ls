@@ -34,15 +34,17 @@ int		loopthroughj(struct s_timestuff *ts, int i)
 	return (j);
 }
 
-int		get_n_time_day(struct s_timestuff *ts, char *newdate,
-						int arr_track, int i)
+int		get_n_time_day(struct s_timestuff *ts, char *ndnan,
+						int i)
 {
 	int	j;
+	int	arr_track;
 
+	arr_track = 0;
 	j = 0;
 	while (ts->nantime[i][j])
 	{
-		newdate[arr_track] = ts->nantime[i][j];
+		ndnan[arr_track] = ts->nantime[i][j];
 		j++;
 		arr_track++;
 	}
@@ -71,7 +73,6 @@ int		conv_time_day(int i, int arr_track, char *newdate,
 			j++;
 		}
 	}
-	arr_track = get_n_time_day(ts, &*newdate, arr_track, i);
 	newdate[arr_track] = '\0';
 	return (arr_track);
 }
@@ -96,5 +97,6 @@ char	**conv_full_date(char *arg, struct s_timestuff *ts)
 		i++;
 	}
 	newdate[i] = NULL;
+//	display_ls(newdate);
 	return (newdate);
 }
