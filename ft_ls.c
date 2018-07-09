@@ -42,6 +42,7 @@ void	define_vars(struct s_dirstuff *lsdirs,
 	lsdirs->d = 0;
 	lsdirs->g = 0;
 	lsdirs->nt = 0;
+	lsdirs->numargs = 0;
 }
 
 int		main(int argc, char *argv[])

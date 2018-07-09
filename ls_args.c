@@ -44,18 +44,16 @@ int		check_minus(char *arg_list)
 	return (check);
 }
 
-char	**get_path(char *arg_list)
+char	**get_path(char *arg_list, struct s_dirstuff *lsdirs)
 {
 	int		j;
 	char	**path;
-	int		k;
 	char	*al;
 	int		check;
 
 	check = check_minus(arg_list);
 	path = malloc(200);
 	j = 0;
-	k = 0;
 	if (ft_strlen(arg_list) == 0 || (ft_strlen(arg_list) > 0 &&
 	 ft_strlen(arg_list) <= 3 && check == 1))
 	{
@@ -69,7 +67,11 @@ char	**get_path(char *arg_list)
 			al = ft_memmove(al, arg_list + 2, ft_strlen(arg_list) - 2);
 		else
 			al = ft_memmove(al, arg_list, ft_strlen(arg_list));
-		path = ft_strsplit(al, ' ');	
+		path = ft_strsplit(al, ' ');
+		j = 0;
+		while (path[j])
+			j++;
+		lsdirs->numargs = j;
 	}
 	return (path);
 }
@@ -82,6 +84,8 @@ void	call_args(struct s_dirstuff *lsdirs, struct s_line_stuff *lstuff,
 	i = 0;
 	while (path[i])
 	{
+		if (lsdirs->numargs > 1)
+			ft_printf("\n%s: \n", path[i]);
 		if (lsdirs->r2 == 1)
 			ls_r2(path[i], lsdirs);
 		else if (lsdirs->a == 1)
@@ -138,7 +142,7 @@ void	parse_args(char *arg_list, struct s_dirstuff *lsdirs,
 	char	**path;
 
 	i = 0;
-	path = get_path(arg_list);
+	path = get_path(arg_list, lsdirs);
 	while (arg_list[i])
 	{
 		if (arg_list[i] == '-')

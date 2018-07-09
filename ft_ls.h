@@ -38,6 +38,7 @@ struct	s_dirstuff
 	char	d;
 	char	g;
 	char	nt;
+	int		numargs;
 };
 
 struct	s_timestuff
@@ -119,7 +120,7 @@ char	*get_padding(char *padding, int padnum,
 					int i, struct s_line_stuff *lstuff);
 void	free_r2(struct s_dirstuff *r2dir);
 void	free_stuff(struct s_dirstuff *lsdirs);
-char	**get_path(char *arg_list);
+char	**get_path(char *arg_list, struct s_dirstuff *lsdirs);
 void	call_args(struct s_dirstuff *lsdirs, struct s_line_stuff *lstuff,
 					struct s_timestuff *ts, char **path);
 void	check_flags(char *arg_list, int i, struct s_dirstuff *lsdirs);
