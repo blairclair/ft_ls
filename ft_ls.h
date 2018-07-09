@@ -62,6 +62,7 @@ struct	s_line_stuff
 	int			*size_padding;
 	int			numblocks;
 	char		*realname;
+	char		**poss_link;
 };
 
 struct	s_sortstuff
@@ -73,6 +74,7 @@ struct	s_sortstuff
 	int		bsizesort;
 	char	*datesort;
 	int		numsort;
+	char	*linksort;
 };
 
 int		ls_r(char *arg);

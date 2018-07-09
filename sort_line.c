@@ -34,6 +34,7 @@ void	sort_line_p1(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff,
 	s_stuff->numsort = lstuff->num[i];
 	s_stuff->permsort = lstuff->perm[i];
 	s_stuff->usersort = lstuff->user[i];
+	s_stuff->linksort = lstuff->poss_link[i];
 }
 
 void	sort_line_p2(struct s_line_stuff *lstuff, int j)
@@ -45,6 +46,7 @@ void	sort_line_p2(struct s_line_stuff *lstuff, int j)
 	lstuff->num[j + 1] = lstuff->num[j];
 	lstuff->perm[j + 1] = lstuff->perm[j];
 	lstuff->user[j + 1] = lstuff->user[j];
+	lstuff->poss_link[j + 1] = lstuff->poss_link[j];
 }
 
 void	sort_line_p3(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff,
@@ -57,6 +59,7 @@ void	sort_line_p3(struct s_sortstuff *s_stuff, struct s_line_stuff *lstuff,
 	lstuff->num[j + 1] = s_stuff->numsort;
 	lstuff->perm[j + 1] = s_stuff->permsort;
 	lstuff->user[j + 1] = s_stuff->usersort;
+	lstuff->poss_link[j + 1] = s_stuff->linksort;
 }
 
 char	**sort_line(char **arreg, struct s_line_stuff *lstuff)
