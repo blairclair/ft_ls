@@ -5,7 +5,7 @@ GOAL
 -----
 To recreate the ls command
 
-How to compile
+How to use
 --------------
 --------------
 Clone the repo with git clone https://github.com/blairclair/ft_ls.git
