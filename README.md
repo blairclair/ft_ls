@@ -8,7 +8,7 @@ To recreate the ls command
 How to use
 --------------
 --------------
-Clone the repo with git clone https://github.com/blairclair/ft_ls.git
+Clone the repo with ```git clone https://github.com/blairclair/ft_ls.git```
 Cd into the name of the directory you just created with cd dirname replacing dirname with the name you've chosen
 Run make to compile the program with my makefile
 Run the excecutable with ./ft_ls either on its own or with one of the following flags-das an argument
