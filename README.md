@@ -20,3 +20,7 @@ modification time.
   - -d: Lists the directory you are currently in.
   - -t: Lists the files sorted by last modification time.
 
+Example
+--------
+--------
+![](ls.gif)
